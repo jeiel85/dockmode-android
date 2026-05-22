@@ -21,6 +21,13 @@ GitHub Release 본문(release body)을 손으로 쓰고 싶을 때 사용합니�
    - GitHub Release 생성 또는 갱신
    - 본 문서가 있으면 그 내용을 Release 본문으로 사용
    - 없으면 GitHub 자동 changelog 사용
+6. CI 완료 후 로컬에서 바탕화면으로 산출물을 내보냅니다 (Play Store 업로드 빠른 접근용).
+
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File scripts\export-release-to-desktop.ps1 -Tag vX.Y.Z
+   ```
+
+   바탕화면에 `dockmode-vX.Y.Z.aab` + `dockmode-vX.Y.Z-release-notes.txt`가 만들어집니다. 자세한 내용은 [RELEASE.md §4-1](../../RELEASE.md#4-1-바탕화면으로-산출물-내보내기) 참고.
 
 ## 파일명 규칙
 

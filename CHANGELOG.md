@@ -26,15 +26,12 @@ DockMode 첫 동작 빌드 릴리즈. 자세한 본문은 [docs/releases/v0.1.0.
 
 ## Unreleased
 
-### Build / CI
-- 태그 푸시(`v*.*.*`) 시 GitHub Release를 자동 생성·갱신하고 Debug APK / Release AAB / R8 mapping을 첨부하도록 `Android CI` 워크플로 확장
-- 산출물 파일명을 `dockmode-vX.Y.Z-debug.apk`, `dockmode-vX.Y.Z-release.aab`, `dockmode-vX.Y.Z-mapping.txt`로 정규화
-- 워크플로에 `permissions: contents: write` 추가하여 `softprops/action-gh-release@v2`가 Release를 만들 수 있도록 권한 부여
+### Added
+- `scripts/export-release-to-desktop.ps1`: 릴리즈된 AAB와 Play Store 노트를 사용자 바탕화면에 `dockmode-<tag>.aab` + `dockmode-<tag>-release-notes.txt` 형식으로 내보내는 PowerShell 스크립트 (최신 태그 자동 감지 지원)
 
 ### Documentation
-- `docs/releases/README.md`, `play_store/release_notes/README.md` 신규 추가로 새 버전 만들기 절차와 형식 가이드 정의
-- `docs/releases/v0.1.0.md`, `play_store/release_notes/v0.1.0.txt`를 실제 v0.1 구현 기준으로 재작성
-- `RELEASE.md`를 태그 트리거 자동화 기준으로 전면 갱신 (산출물 파일명 표, 새 버전 만들기 절차, 롤백 절차 추가)
+- `RELEASE.md` §4-1 "바탕화면으로 산출물 내보내기" 추가
+- `docs/releases/README.md` 흐름에 바탕화면 내보내기 단계 추가
 
 ### Added
 - Kotlin + Jetpack Compose + Gradle Kotlin DSL 기반 Android 앱 골격 구성 (`namespace`/`applicationId` `io.jeiel85.dockmode`, minSdk 26, compileSdk 35)

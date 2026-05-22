@@ -60,6 +60,40 @@ CI의 `Collect release artifacts` 단계가 빌드 산출물을 위 파일명으
    - `docs/releases/<tag>.md`가 있으면 그 내용을 Release 본문으로, 없으면 GitHub 자동 changelog 사용
    - 산출물을 GitHub Release에 첨부
 
+## 4-1. 바탕화면으로 산출물 내보내기
+
+같은 머신에서 관리하는 다른 Android 프로젝트(markleaf, lumina-daily 등)와 동일한 규칙으로 사용자 바탕화면에 릴리즈 묶음을 둔다. Play Store 업로드 시 빠르게 끌어다 쓰기 위한 용도다.
+
+규칙:
+
+| 파일명 | 출처 |
+|---|---|
+| `dockmode-vX.Y.Z.aab` | GitHub Release의 `dockmode-vX.Y.Z-release.aab`를 이름만 단순화해서 복사 |
+| `dockmode-vX.Y.Z-release-notes.txt` | 저장소의 `play_store/release_notes/vX.Y.Z.txt`를 그대로 복사 |
+
+자동화:
+
+```powershell
+# 최신 릴리즈 자동 감지
+powershell -ExecutionPolicy Bypass -File scripts\export-release-to-desktop.ps1
+
+# 특정 태그 지정
+powershell -ExecutionPolicy Bypass -File scripts\export-release-to-desktop.ps1 -Tag v0.1.0
+```
+
+스크립트 동작:
+
+1. `gh release download <tag> --pattern dockmode-<tag>-release.aab`로 AAB 다운로드
+2. 바탕화면(`[Environment]::GetFolderPath('Desktop')`)에 `dockmode-<tag>.aab` 로 복사
+3. `play_store/release_notes/<tag>.txt`를 바탕화면에 `dockmode-<tag>-release-notes.txt` 로 복사
+
+체크:
+
+- [ ] 바탕화면 AAB 파일 크기 > 0
+- [ ] 바탕화면 release notes에 `<ko-KR>`, `<en-US>` 블록 모두 포함
+
+> **참고**: 스크립트는 로컬 보조 도구다. CI는 사용자 바탕화면에 접근할 수 없으므로 이 단계는 사람이 실행한다. mapping.txt가 추가로 필요한 경우 `gh release download <tag> --pattern 'dockmode-*-mapping.txt'`로 별도로 받는다.
+
 ## 5. GitHub Actions와 Release 확인
 
 ```bash

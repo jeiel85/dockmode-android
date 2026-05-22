@@ -20,6 +20,17 @@
   - `dockmode-v0.1.0-release.aab` (≈ 2.33 MB, unsigned)
   - `dockmode-v0.1.0-mapping.txt` (≈ 17.4 MB)
 - Release 본문은 `docs/releases/v0.1.0.md`가 정상 사용됨 (수기 노트 우선순위 동작 확인).
+
+### 추가 절차: 바탕화면 내보내기
+
+- 같은 머신의 다른 Android 프로젝트(markleaf, lumina-daily 등)와 동일하게 사용자 바탕화면에 `<prefix>-<tag>.aab`와 `<prefix>-<tag>-release-notes.txt`를 두는 규칙이 빠져 있던 점을 보완.
+- 신규 `scripts/export-release-to-desktop.ps1`: `gh release download`로 AAB를 받고, `play_store/release_notes/<tag>.txt`와 함께 바탕화면에 복사. 최신 태그 자동 감지 지원.
+- v0.1.0 산출물 실제 내보내기 확인:
+  - `dockmode-v0.1.0.aab` (2,330,832 B)
+  - `dockmode-v0.1.0-release-notes.txt` (1,229 B)
+  - 저장 경로: `[Environment]::GetFolderPath('Desktop')` → `C:\Users\jeiel\OneDrive\바탕 화면` (OneDrive 동기화 폴더)
+- 문서 동기화: `RELEASE.md`에 §4-1 "바탕화면으로 산출물 내보내기" 추가, `docs/releases/README.md` 흐름 6단계로 추가.
+
 - 후속 작업:
   - 릴리즈 키스토어 구성과 서명된 AAB 생성 절차 정리.
   - 첫 실기기 검증 후 v0.1.1 패치 또는 v0.2.0으로 다음 릴리즈 진행 (versionCode 증가 필수).
