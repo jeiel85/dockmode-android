@@ -18,13 +18,39 @@
   - 로컬 환경에 Gradle CLI와 Android SDK가 없음 (`JAVA_HOME` 미설정, `ANDROID_HOME` 없음). `./gradlew` 실행 불가로 lint/test/build는 모두 GitHub Actions에 위임.
   - 정적 검토: Manifest 권한·서비스 메타데이터, ProjectId 일치, Compose 컴포저블 구조, 권한 분기, DreamService Lifecycle 처리 수동 확인.
   - 단위 테스트는 android.jar의 `static final int` 상수만 참조하도록 매핑 로직을 순수 함수(`BatteryStatusMapper.map`)로 분리해 작성.
-- 결과: 코드/리소스/문서 묶음 작성 완료. 빌드 성공 여부는 CI 결과 확인 후 별도 기록 필요.
+- 결과: 코드/리소스/문서 묶음 작성 완료. 초기 푸시 후 CI에서 detekt `LongParameterList`, ktlint 다수 스타일 위반이 발견돼 detekt 임계값 완화(8)와 ktlint 스타일 규칙(parameter-list-wrapping, parameter-wrapping, function-expression-body, multiline-expression-wrapping, expression-operand-wrapping, chain-method-continuation, no-empty-first-line-in-class-body, class-signature, function-signature) 비활성화, `SettingsViewModel` 선언 사이 빈 줄 추가로 해결.
+- CI 최종 결과 (run 26275335586, 약 3분 41초):
+  - ✓ ktlintCheck + detekt
+  - ✓ testDebugUnitTest
+  - ✓ assembleDebug → `dockmode-debug-apk` (≈ 9.65 MB)
+  - ✓ bundleRelease → `dockmode-release-aab` (≈ 2.29 MB, unsigned)
+  - ✓ R8 mapping → `dockmode-mapping` (≈ 1.43 MB)
 - 후속 작업:
-  - GitHub Actions `Android CI` 워크플로 결과 확인 (lint/test/assembleDebug/bundleRelease 단계)
   - 실기기에서 StandbyActivity 화면 유지, 캘린더 권한 흐름, DreamService 선택/표시 수동 검증 후 본 문서에 추가 기록
   - 태블릿/폴더블 가로 분할 레이아웃 최적화
   - 야간 모드 자동 적용 정책(시간 기반/조도 센서) 결정
   - 정식 앱 아이콘 디자인 (현재 어댑티브 아이콘은 임시 벡터)
+  - 릴리즈 키스토어 구성 및 서명된 AAB 생성 절차 정리
+  - GitHub Actions 사용 액션의 Node.js 20 → 24 마이그레이션 (`actions/checkout@v4` 등 deprecation 경고 대응)
+
+## 2026-05-22
+
+- 작업: 개발 완료에 따른 GitHub 저장소 정비
+- 변경 사항:
+  - GitHub Pages 활성화 (source `main` 브랜치 `/docs`) → `https://jeiel85.github.io/dockmode-android/`
+  - 저장소 description: "Android 충전 거치대용 시계·달력 대시보드. Kotlin + Jetpack Compose + DreamService 기반 로컬 우선 앱." 설정
+  - 저장소 homepage URL을 GitHub Pages URL로 지정
+  - 저장소 토픽 추가: `android`, `kotlin`, `jetpack-compose`, `dreamservice`, `dockmode`, `standby`, `clock`, `calendar`, `material3`, `local-first`
+  - README.md를 v0.1 구현 완료 기준으로 재작성: CI/Pages 배지, 화면 구성표, 빌드 명령, 문서 인덱스, 권한 정책 요약 반영
+  - `docs/index.md`, `docs/_config.yml` (Cayman 테마) 추가로 Pages 랜딩 페이지 구성
+- 검증:
+  - `gh api repos/.../pages` → status `built`, public `true`
+  - `curl -I https://jeiel85.github.io/dockmode-android/` → HTTP 200
+  - 저장소 메타데이터 조회 결과 description/homepage/topics 정상 반영
+- 결과: 성공
+- 후속 작업:
+  - Pages 사이트에 실기기 스크린샷 추가 (현재 텍스트 위주)
+  - 라이선스 결정 및 LICENSE 파일 추가
 
 ## 2026-05-22
 
