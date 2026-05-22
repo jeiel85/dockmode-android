@@ -102,3 +102,72 @@ v1.0까지는 Google Calendar REST API를 사용하지 않고 Android Calendar P
 
 - 에이전트는 Gradle `namespace`, `applicationId`, Kotlin package path, CI 산출물 이름을 `PROJECT_ID.md` 기준으로 맞춘다.
 - 실제 GitHub 저장소 생성 전에는 Repository URL이 예약값이라는 점을 작업 보고에 명시한다.
+
+---
+
+## ADR-006: DreamService에서 ComposeView 호스팅 시 Lifecycle/ViewModelStore/SavedStateRegistry owner를 직접 구현
+
+날짜: 2026-05-22
+
+### 결정
+
+`StandbyDreamService`는 `LifecycleOwner`, `ViewModelStoreOwner`, `SavedStateRegistryOwner`를 직접 구현하고, `ComposeView`에 `setViewTreeLifecycleOwner` / `setViewTreeViewModelStoreOwner` / `setViewTreeSavedStateRegistryOwner`를 설정한 뒤 `ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed`로 컴포지션을 해제한다.
+
+### 이유
+
+- `DreamService`는 `ComponentActivity`가 아니므로 Compose가 기대하는 lifecycle/saved-state owner를 자동으로 제공하지 않는다.
+- ViewModel과 `collectAsStateWithLifecycle`을 `StandbyRoute`에서 그대로 재사용하려면 owner가 view tree에 연결돼 있어야 한다.
+- Dream 종료 시 컴포지션과 ViewModelStore를 정리해 메모리 누수를 막는다.
+
+### 영향
+
+- DreamService는 lifecycle 이벤트를 수동으로 전달한다 (`onCreate`/`onAttachedToWindow`/`onDetachedFromWindow`/`onDestroy`).
+- 향후 `DreamService` 전용 UI 분기를 추가할 때 `StandbyLaunchMode.Dream`을 활용한다.
+
+---
+
+## ADR-007: OLED 번인 방지는 1분 주기 원형 미세 이동으로 구현
+
+날짜: 2026-05-22
+
+### 결정
+
+`BurnInOffset.calculate`는 `nowMillis`에 비례한 위상으로 cos/sin 좌표를 만들어 ±12px 이내의 정수 픽셀 오프셋을 반환한다. `StandbyScreen` 루트 컨테이너에 `Modifier.offset { IntOffset(dx, dy) }`로 적용한다.
+
+### 이유
+
+- 시계와 날짜처럼 장시간 같은 위치에 머무는 정적 요소가 OLED 번인을 일으킬 수 있다.
+- 사용자가 인지하기 어려운 정도의 미세 이동만으로 픽셀을 분산시킬 수 있다.
+- 별도 애니메이션 라이브러리 없이 매 프레임 단순 좌표만 계산해 비용이 거의 없다.
+
+### 영향
+
+- `burnInGuard` 설정으로 끌 수 있다.
+- 추후 시계 위치를 큰 폭으로 이동시키는 별도 “쉬프트” 모드를 추가하려면 `BurnInOffset`을 확장한다.
+
+---
+
+## ADR-008: 의존성 버전은 Compose BOM 2024.10.01 / Kotlin 2.0.21 / AGP 8.7.2를 기준값으로 사용
+
+날짜: 2026-05-22
+
+### 결정
+
+- Android Gradle Plugin 8.7.2
+- Kotlin 2.0.21 (Compose Compiler는 `org.jetbrains.kotlin.plugin.compose` 적용)
+- Compose BOM 2024.10.01, Material 3 1.3.1
+- AndroidX Lifecycle 2.8.7, Activity Compose 1.9.3
+- DataStore 1.1.1, kotlinx-coroutines 1.9.0
+- ktlint Gradle 12.1.2 (ktlint 1.3.1) / detekt 1.23.7
+- Gradle 8.10.2 wrapper, Java target 17
+
+### 이유
+
+- 2026년 초 기준 안정된 최신 조합으로, Kotlin 2.0+ Compose Compiler 플러그인이 별도 버전 매핑 없이 동작한다.
+- AGP 8.7+는 Java 17/21 JDK에서 모두 빌드 가능하다.
+- BOM 사용으로 Compose 하위 라이브러리 버전을 동기 관리한다.
+
+### 영향
+
+- 향후 Compose/Kotlin 업그레이드 시 BOM과 플러그인 버전을 함께 갱신한다.
+- ktlint/detekt 도구 버전은 별도 후속 작업으로 정기 갱신한다.

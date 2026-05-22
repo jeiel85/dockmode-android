@@ -2,6 +2,32 @@
 
 ## 2026-05-22
 
+- 작업: GOALS.md Goal 1+2+3 통합 구현. DockMode Android 앱의 Gradle 골격, MainActivity/HomeScreen, StandbyActivity, StandbyDreamService, 캘린더 권한 UX, 번인 방지, 다크 테마, 단위 테스트, ktlint/detekt 설정 일괄 추가.
+- 적용 식별값:
+  - Gradle namespace/applicationId: `io.jeiel85.dockmode`
+  - minSdk 26 / compileSdk 35 / versionName 0.1.0 / versionCode 1
+  - 산출물 접두어: `dockmode`
+- 변경 파일:
+  - 신규: `settings.gradle.kts`, `build.gradle.kts`, `gradle.properties`, `gradle/libs.versions.toml`, `gradle/wrapper/gradle-wrapper.{jar,properties}`, `gradlew`, `gradlew.bat`, `.editorconfig`, `.gitattributes`, `config/detekt/detekt.yml`
+  - 신규: `app/build.gradle.kts`, `app/proguard-rules.pro`, `app/src/main/AndroidManifest.xml`
+  - 신규: `app/src/main/res/values/{strings,colors,themes}.xml`, `values-en/strings.xml`, `values-night/themes.xml`, `xml/{standby_dream,backup_rules,data_extraction_rules}.xml`, `mipmap-anydpi-v26/*`, `drawable/ic_launcher_*.xml`
+  - 신규 Kotlin: `DockModeApplication.kt`, `MainActivity.kt`, `domain/model/*`, `data/battery/BatteryStateRepository.kt`, `data/calendar/CalendarRepository.kt`, `data/settings/SettingsRepository.kt`, `home/HomeScreen.kt`, `home/HomeViewModel.kt`, `settings/SettingsScreen.kt`, `settings/SettingsViewModel.kt`, `standby/{StandbyActivity,StandbyDreamService,StandbyRoute,StandbyScreen,StandbyUiState,StandbyViewModel}.kt`, `ui/theme/{Color,Theme,Type}.kt`, `util/{Formatters,CalendarFilters,BurnInOffset,TickerFlow}.kt`
+  - 신규 테스트: `app/src/test/java/io/jeiel85/dockmode/util/{Formatters,CalendarFilters,BurnInOffset}Test.kt`, `data/battery/BatteryChargingMapperTest.kt`, `data/calendar/CalendarRepositoryRangeTest.kt`
+  - 갱신: `TASKS.md` (Milestone 0~4 체크 갱신), `CHANGELOG.md` (Unreleased 상세화), `DECISIONS.md` (ADR-006~008 추가), `HISTORY.md` (본 항목)
+- 검증:
+  - 로컬 환경에 Gradle CLI와 Android SDK가 없음 (`JAVA_HOME` 미설정, `ANDROID_HOME` 없음). `./gradlew` 실행 불가로 lint/test/build는 모두 GitHub Actions에 위임.
+  - 정적 검토: Manifest 권한·서비스 메타데이터, ProjectId 일치, Compose 컴포저블 구조, 권한 분기, DreamService Lifecycle 처리 수동 확인.
+  - 단위 테스트는 android.jar의 `static final int` 상수만 참조하도록 매핑 로직을 순수 함수(`BatteryStatusMapper.map`)로 분리해 작성.
+- 결과: 코드/리소스/문서 묶음 작성 완료. 빌드 성공 여부는 CI 결과 확인 후 별도 기록 필요.
+- 후속 작업:
+  - GitHub Actions `Android CI` 워크플로 결과 확인 (lint/test/assembleDebug/bundleRelease 단계)
+  - 실기기에서 StandbyActivity 화면 유지, 캘린더 권한 흐름, DreamService 선택/표시 수동 검증 후 본 문서에 추가 기록
+  - 태블릿/폴더블 가로 분할 레이아웃 최적화
+  - 야간 모드 자동 적용 정책(시간 기반/조도 센서) 결정
+  - 정식 앱 아이콘 디자인 (현재 어댑티브 아이콘은 임시 벡터)
+
+## 2026-05-22
+
 - 작업: DockMode 프로젝트 코드와 레포 아이디 확정 및 설계 묶음 반영
 - 적용 식별값:
   - Project Code: `DKM-ANDROID`
