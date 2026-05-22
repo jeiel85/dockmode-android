@@ -18,6 +18,7 @@ play_store/
 │       ├── short-description.txt
 │       └── long-description.txt
 ├── screenshots/                         # 폰 스크린샷 5종 + 업로드 가이드
+├── graphics/                            # 앱 아이콘 + 피처 그래픽
 └── release_notes/                       # 버전별 "What's new" 본문
 ```
 
@@ -30,8 +31,8 @@ play_store/
 | 스토어 등록정보 → 전체 설명 (4000자) | `ko-KR/long-description.txt`, `en-US/long-description.txt` |
 | 스토어 등록정보 → 카테고리 | `category-and-audience.md` |
 | 스토어 등록정보 → 휴대전화 스크린샷 | `play_store/screenshots/` |
-| 스토어 등록정보 → 피처 그래픽 | **미준비** — 정식 디자인 후속 작업 |
-| 스토어 등록정보 → 고해상도 아이콘 (512×512) | **미준비** — 정식 디자인 후속 작업 |
+| 스토어 등록정보 → 피처 그래픽 | `play_store/graphics/feature-graphic-1024x500.png` |
+| 스토어 등록정보 → 고해상도 아이콘 (512×512) | `play_store/graphics/app-icon-512.png` |
 | 정책 → 개인정보처리방침 | `https://jeiel85.github.io/dockmode-android/privacy/` |
 | 앱 콘텐츠 → 콘텐츠 등급 | `content-rating-answers.md` |
 | 앱 콘텐츠 → 데이터 보안 | `data-safety-form.md` |
@@ -39,18 +40,16 @@ play_store/
 | 앱 콘텐츠 → 광고 | 없음 (광고 SDK 미포함) |
 | 출시 → 테스트/프로덕션 → 출시 노트 | `play_store/release_notes/<tag>.txt` |
 
-## 미준비 자산 (후속 디자인 작업)
+## 그래픽 자산
 
-Play Console 등록을 100% 완료하려면 아래 자산이 추가로 필요합니다. 현재는 임시 어댑티브 아이콘 외에는 준비되지 않았습니다.
+Play Console 등록에 필요한 기본 그래픽 자산은 `play_store/graphics/`에 보관합니다.
 
 | 자산 | 사양 | 상태 |
 |---|---|---|
-| 고해상도 앱 아이콘 | 512×512 PNG, 32-bit | **미준비** (어댑티브 아이콘에서 추출 가능하나 정식 디자인 권장) |
-| 피처 그래픽 | 1024×500 PNG/JPG | **미준비** |
+| 고해상도 앱 아이콘 | 512×512 PNG, 32-bit | 준비됨: `play_store/graphics/app-icon-512.png` |
+| 피처 그래픽 | 1024×500 PNG/JPG | 준비됨: `play_store/graphics/feature-graphic-1024x500.png` |
 | TV 배너 | 1280×720 | 해당 없음 (TV 미지원) |
 | 동영상 (선택) | YouTube URL | 해당 없음 |
-
-후속 작업으로 `TASKS.md`에 디자인 항목을 추가하여 추적합니다.
 
 ## 갱신 규칙
 

@@ -45,8 +45,8 @@ DockMode를 처음으로 Play Console에 등록하기 위한 사용자 액션 �
 - [ ] **[사용자]** **앱 이름** (50자): `DockMode - 거치대 시계 & 일정`
 - [ ] **[사용자]** **짧은 설명** (80자): [ko-KR/short-description.txt](listing/ko-KR/short-description.txt) 내용 복사
 - [ ] **[사용자]** **전체 설명** (4000자): [ko-KR/long-description.txt](listing/ko-KR/long-description.txt) 내용 복사
-- [ ] **[사용자]** **앱 아이콘** (512×512): **미준비** — 임시로 어댑티브 아이콘에서 추출하거나, 정식 디자인 작업이 끝난 후 업로드
-- [ ] **[사용자]** **피처 그래픽** (1024×500): **미준비** — 정식 디자인 작업 필요
+- [ ] **[사용자]** **앱 아이콘** (512×512): [play_store/graphics/app-icon-512.png](graphics/app-icon-512.png) 업로드
+- [ ] **[사용자]** **피처 그래픽** (1024×500): [play_store/graphics/feature-graphic-1024x500.png](graphics/feature-graphic-1024x500.png) 업로드
 - [ ] **[사용자]** **휴대전화 스크린샷** (최소 2장): [play_store/screenshots/README.md](screenshots/README.md)의 권장 순서대로 5장 업로드
   1. `01-home.png` (HomeScreen)
   2. `03-standby-minimal.png` (야간 미니멀)
@@ -75,7 +75,7 @@ DockMode를 처음으로 Play Console에 등록하기 위한 사용자 액션 �
 
 - [ ] **[사용자]** 내부 테스트에서 핵심 기능 동작 확인 (HomeScreen / Settings / Standby 3종 / DreamService) 후 비공개 테스트(Closed Testing) 트랙으로 승격.
 - [ ] **[사용자]** 비공개 테스트 통과 후 공개 테스트(Open Testing) 또는 프로덕션(Production)으로 단계적 승격.
-- [ ] **[사용자]** 프로덕션 출시 전 미준비 자산(정식 앱 아이콘, 피처 그래픽) 완성.
+- [ ] **[사용자]** 프로덕션 출시 전 그래픽 자산(정식 앱 아이콘, 피처 그래픽)이 현재 브랜드명과 일치하는지 최종 확인.
 
 ## I. 출시 후
 
@@ -94,6 +94,7 @@ DockMode를 처음으로 Play Console에 등록하기 위한 사용자 액션 �
 - [x] 키스토어 / Play App Signing 가이드
 - [x] 환경변수 기반 release signingConfig + CI 시크릿 디코드 단계
 - [x] 폰 스크린샷 5종 (실기기 캡처)
+- [x] 정식 앱 아이콘 512×512 + 피처 그래픽 1024×500
 - [x] 출시 노트 v0.1.0 한·영
 
 남은 일은 모두 사용자 액션이며 위 A~I에 정리되어 있습니다.

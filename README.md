@@ -45,7 +45,7 @@ v0.1 기준으로 다음이 구현되어 있습니다.
 - **CalendarRepository**: `READ_CALENDAR` 권한 확인 후 Calendar Provider로 오늘 일정 조회
 - **BatteryStateRepository**: `ACTION_BATTERY_CHANGED` sticky broadcast 기반 충전 상태 Flow
 - **SettingsRepository**: DataStore Preferences 기반 설정 저장
-- 한국어(기본) / 영어 문자열 리소스, 다크 컬러 팔레트, 어댑티브 런처 아이콘(임시)
+- 한국어(기본) / 영어 문자열 리소스, 다크 컬러 팔레트, 정식 런처 아이콘과 Play Store 그래픽 자산
 - 단위 테스트: 시간/날짜 포맷터, 일정 필터링, 번인 오프셋, 충전 상태 매핑, 일정 조회 범위
 - GitHub Actions 기반 CI (ktlint, detekt, unit test, debug APK, release AAB, mapping.txt 업로드)
 

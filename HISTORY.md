@@ -1,5 +1,26 @@
 # HISTORY.md
 
+## 2026-05-23 (Play Store 그래픽 자산 제작)
+
+- 작업: Play Console 기본 등록정보에 필요한 정식 앱 아이콘 512×512 PNG와 피처 그래픽 1024×500 PNG를 제작하고, 임시 런처 아이콘 벡터를 같은 모티프로 동기화.
+- 디자인 기준:
+  - 기존 DockMode 리뉴얼 팔레트(Obsidian, Space Blue, Amber, Starlight Ivory)를 사용.
+  - Apple StandBy 명칭, UI 구성, 아이콘 형태를 복제하지 않고 Android 충전 거치대용 시계 앱을 독립적으로 표현.
+  - 피처 그래픽은 실제 앱 캡처(`play_store/screenshots/03-standby-minimal.png`, `04-standby-digital.png`)를 합성해 스토어 이미지와 구현 화면이 어긋나지 않도록 구성.
+- 추가/변경 파일:
+  - 신규: `scripts/generate-store-graphics.py` (Pillow 기반 그래픽 자산 재생성 스크립트)
+  - 신규: `play_store/graphics/app-icon-512.png`, `play_store/graphics/feature-graphic-1024x500.png`, `play_store/graphics/README.md`
+  - 갱신: `app/src/main/res/drawable/ic_launcher_background.xml`, `app/src/main/res/drawable/ic_launcher_foreground.xml`
+  - 갱신: `TASKS.md`, `CHANGELOG.md`, `README.md`, `play_store/listing/README.md`, `play_store/onboarding-checklist.md`, `play_store/listing/{ko-KR,en-US}/long-description.txt`
+- 검증:
+  - `python scripts\generate-store-graphics.py` 실행 성공.
+  - Pillow로 산출물 크기/모드 확인: `app-icon-512.png` = 512×512 RGBA, `feature-graphic-1024x500.png` = 1024×500 RGBA.
+  - 산출물 2종을 눈으로 확인해 앱명 가독성, 실제 화면 합성, 과도한 유사 UI 없음 확인.
+- 결과: Play Console 기본 그래픽 자산 준비 완료. 사용자는 `play_store/graphics/`의 PNG 2종을 업로드하면 됨.
+- 후속 작업:
+  - Play Console 실제 업로드 후 거부 사유가 있으면 해당 사유 기준으로 그래픽 자산 재조정.
+  - 브랜드명 최종 변경 시 `DockMode` 텍스트가 들어간 피처 그래픽과 스토어 등록정보를 함께 갱신.
+
 ## 2026-05-23 (Play Console 최초 등록 사전 자료 준비)
 
 - 작업: Play Console에 DockMode를 최초 등록하기 위한 자료를 일괄 정비. 등록 자체(콘솔 클릭, 결제, 약관 동의, 키스토어 생성)는 `AGENTS.md §8` 사전 승인 항목이라 사용자 액션으로 남기고, 그 외 자동 정비 가능한 부분은 모두 끝냄.

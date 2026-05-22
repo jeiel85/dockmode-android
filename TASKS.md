@@ -107,8 +107,8 @@
 - [ ] (사용자) Play Developer 계정 등록 ($25) + Play Console에서 DockMode 앱 생성 + Play App Signing 옵트인
 - [ ] (사용자) 업로드 키스토어 생성 + GitHub Actions Secrets 4종 등록
 - [ ] (사용자) 첫 서명 AAB를 내부 테스트 트랙에 업로드 + 본인 기기로 검증
-- [ ] 정식 앱 아이콘 (512×512) 디자인
-- [ ] Play Store 피처 그래픽 (1024×500) 디자인
+- [x] 정식 앱 아이콘 (512×512) 디자인 (`play_store/graphics/app-icon-512.png`)
+- [x] Play Store 피처 그래픽 (1024×500) 디자인 (`play_store/graphics/feature-graphic-1024x500.png`)
 
 완료 기준:
 
@@ -146,7 +146,7 @@
 - [ ] 태블릿/폴더블 가로 분할 레이아웃 튜닝
 - [ ] StandbyScreen instrumented test 추가 (Compose UI Test)
 - [ ] 실기기 DreamService 검증 결과 HISTORY 기록
-- [ ] 앱 아이콘 디자인 정식 작업 (현재는 임시 어댑티브 아이콘)
+- [x] 앱 아이콘 디자인 정식 작업 (`play_store/graphics/app-icon-512.png`, 런처 벡터 동기화)
 - [ ] Play Store 출시 전 앱명 `DockMode` 상표/중복 검토
 - [x] `window.statusBarColor`/`navigationBarColor` deprecation 대응 (WindowInsetsController 기반 대체)
 - [ ] 새 디자인 라이트 모드 경로 검증 (현재 dark 기본값)

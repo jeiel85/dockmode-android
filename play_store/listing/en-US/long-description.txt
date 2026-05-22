@@ -29,7 +29,7 @@ DockMode turns the landscape screen of your phone into a dedicated clock and cal
 
 [Known limits]
 
-· This is an initial release. The official app icon and some visual assets are still being polished.
+· This is an initial release. Some store visuals and listing details may continue to be polished.
 · Weather, external calendar sync, and account sign-in are being evaluated as optional features for a later version.
 
 For feedback and bug reports, please open an issue on GitHub:

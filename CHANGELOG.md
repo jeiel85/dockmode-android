@@ -27,6 +27,10 @@ DockMode 첫 동작 빌드 릴리즈. 자세한 본문은 [docs/releases/v0.1.0.
 ## Unreleased
 
 ### Added
+- Play Store 그래픽 자산 추가
+  - `play_store/graphics/app-icon-512.png`: 고해상도 앱 아이콘 512×512 PNG
+  - `play_store/graphics/feature-graphic-1024x500.png`: 피처 그래픽 1024×500 PNG
+  - `play_store/graphics/README.md`: 그래픽 자산 용도와 재생성 방법
 - Play Console 최초 등록 자료 일괄 추가
   - `play_store/listing/`: 한국어/영어 짧은·긴 설명, 카테고리·타깃 사용자, 데이터 보안 양식, 콘텐츠 등급(IARC) 설문 답변 초안 + 매핑 README
   - `play_store/onboarding-checklist.md`: Play Console 클릭 단계 + 사용자/자동 구분 체크리스트
@@ -37,6 +41,8 @@ DockMode 첫 동작 빌드 릴리즈. 자세한 본문은 [docs/releases/v0.1.0.
 - GitHub Actions 워크플로 `Decode upload keystore` 단계: `DOCKMODE_KEYSTORE_BASE64` 시크릿이 있으면 임시 파일로 디코드 후 `bundleRelease`에 환경변수 전달
 
 ### Changed
+- 어댑티브 런처 아이콘의 배경/전경 벡터를 정식 앱 아이콘과 같은 시계·거치대 모티프로 갱신
+- Play Console 체크리스트와 등록정보 README의 앱 아이콘/피처 그래픽 상태를 준비 완료로 갱신
 - `PRIVACY.md` 상단에 공개 URL(`https://jeiel85.github.io/dockmode-android/privacy/`) 안내 추가
 - `docs/index.md` 개인정보 링크를 GitHub 마크다운 raw 대신 GitHub Pages 내부 페이지로 교체
 - `RELEASE.md` §7을 unsigned 메모에서 키스토어 가이드 요약·시크릿 흐름·체크리스트로 확장. §6 Play Store 체크리스트에 PRIVACY URL, listing 자료, 스크린샷, 상표 검토 항목 추가
