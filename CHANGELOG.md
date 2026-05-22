@@ -27,6 +27,7 @@ DockMode 첫 동작 빌드 릴리즈. 자세한 본문은 [docs/releases/v0.1.0.
 ## Unreleased
 
 ### Changed
+- 시스템 바 색상 처리를 `WindowInsetsControllerCompat` 기반 라이트/다크 아이콘 토글로 교체. Android 15에서 deprecated된 `window.statusBarColor` / `navigationBarColor` 직접 호출 제거 (배경 색은 `enableEdgeToEdge` + 화면 배경에 위임).
 - UI 디자인 리뉴얼 1차 이식: `D:/Project/dockmode-renew` 시안의 화면 구성·컬러·타이포그래피를 본 프로젝트 패키지(`io.jeiel85.dockmode`)에 맞춰 가져옴.
   - HomeScreen: "DOCK MODE" 라벨 헤더, 충전 상태 카드(아이콘·펄스 애니메이션), 캘린더/스크린세이버 카드 아이콘화, Start Standby 풀폭 CTA 강조
   - SettingsScreen: 시계 스타일 3종을 미리보기가 포함된 카드형 세그먼트 셀렉터로 교체, 토글 항목마다 설명 문구 추가, 개인정보 카드 강조
@@ -39,15 +40,20 @@ DockMode 첫 동작 빌드 릴리즈. 자세한 본문은 [docs/releases/v0.1.0.
 - `scripts/export-release-to-desktop.ps1`: 릴리즈된 AAB와 Play Store 노트를 사용자 바탕화면에 `dockmode-<tag>.aab` + `dockmode-<tag>-release-notes.txt` 형식으로 내보내는 PowerShell 스크립트 (최신 태그 자동 감지 지원)
 - `androidx.compose.material:material-icons-core` / `material-icons-extended` 의존성 (Bolt, CalendarToday, Monitor, Settings, PlayArrow, CheckCircle, Warning, Info, ArrowBack, Close, EventNote 사용)
 - `androidx.navigation:navigation-compose` 의존성 (홈 ↔ 설정 화면 전환)
+- 리뉴얼 디자인 실기기 스크린샷 5종 (`docs/screenshots/01-home.png`, `02-settings.png`, `03-standby-minimal.png`, `04-standby-digital.png`, `05-standby-calendar.png`) + 보조 컷 `01b-home-scrolled.png`. Galaxy S24에서 캡처
+- Play Store 등록용 스크린샷 사본 (`play_store/screenshots/`)과 업로드 순서 가이드 README
+- README "화면 미리보기" 섹션 신설 (Home/Settings + Standby 3종 비교표)
 
 ### Documentation
 - `RELEASE.md` §4-1 "바탕화면으로 산출물 내보내기" 추가
 - `docs/releases/README.md` 흐름에 바탕화면 내보내기 단계 추가
-- `HISTORY.md`에 2026-05-22 디자인 리뉴얼 1차 이식 작업 기록
+- `HISTORY.md`에 2026-05-22 디자인 리뉴얼 1차 이식 + 2026-05-23 statusBar deprecation 대응/스크린샷 작업 기록
 - `DECISIONS.md` ADR-009 (외부 디자인 시안 이식 정책) 추가
+- `docs/screenshots/README.md` (캡처 환경/재캡처 방법), `play_store/screenshots/README.md` (업로드 순서/Play Console 요건)
 
 ### Verification
-- 로컬: `./gradlew ktlintCheck detekt testDebugUnitTest assembleDebug lintDebug` 모두 성공 (Windows + JDK 17 + Android SDK)
+- 로컬: `./gradlew ktlintCheck detekt testDebugUnitTest assembleDebug lintDebug` 모두 성공
+- 실기기(Galaxy S24): Home/Settings/Standby 3종 화면 동작 확인, 시스템 바 아이콘이 다크 배경에 라이트 톤으로 정상 표시
 - CI: 푸시 후 GitHub Actions 결과 확인 예정
 
 ### Added

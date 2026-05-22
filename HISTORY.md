@@ -1,5 +1,31 @@
 # HISTORY.md
 
+## 2026-05-23 (statusBar deprecation 대응 + 실기기 스크린샷)
+
+- 작업: 리뉴얼 디자인 이식 직후 남아 있던 `window.statusBarColor` / `navigationBarColor` deprecation 경고를 정리하고, 새 디자인을 README/Play Store에 반영하기 위해 Galaxy S24(SM-S921N) 실기기로 핵심 화면 5종을 캡처.
+- 코드 변경:
+  - `ui/theme/Theme.kt`: SideEffect 안에서 `window.statusBarColor` / `navigationBarColor` 직접 설정을 제거하고, `WindowInsetsControllerCompat`의 `isAppearanceLightStatusBars` / `isAppearanceLightNavigationBars`로 시스템 바 아이콘 톤만 제어하도록 교체. 시스템 바 배경은 `enableEdgeToEdge`(MainActivity) + 화면 배경에 위임.
+- 캡처 절차 (ADB):
+  - `adb shell am force-stop io.jeiel85.dockmode.debug` → `am start MainActivity` → screencap 으로 홈 캡처
+  - 홈 스크롤 → `설정` 버튼 좌표 탭 → SettingsScreen 캡처
+  - 시계 스타일 카드(미니멀=200, 디지털=540, 캘린더 중심=880 / y=720) 탭 → 뒤로 → `대기 화면 시작`(540, 950) → StandbyActivity가 sensorLandscape로 회전 → screencap (2340×1080)
+  - 스타일별로 1·2·3 반복하여 Minimal / Digital / CalendarFocus 3종 standby 캡처
+  - 도중에 시스템 "AutoInput이(가) 계속 중단됨" 다이얼로그가 떠 좌표 탭을 가로채는 사고가 있었음. 다이얼로그 dismiss 후 재진행.
+- 산출 파일 (`docs/screenshots/`):
+  - `01-home.png`, `01b-home-scrolled.png`
+  - `02-settings.png`
+  - `03-standby-minimal.png`, `04-standby-digital.png`, `05-standby-calendar.png`
+- Play Store 사본: `play_store/screenshots/`에 5종 동일 파일 + 업로드 순서/요건 README
+- 문서 갱신: `README.md` "화면 미리보기" 섹션 신설, `docs/screenshots/README.md` 캡처 환경, `CHANGELOG.md` Unreleased에 statusBar 변경/스크린샷 추가 항목 정리.
+- 검증:
+  - 로컬: `./gradlew ktlintCheck detekt assembleDebug` 모두 성공. statusBarColor deprecation 경고 사라짐 확인.
+  - 실기기: Galaxy S24에서 5종 화면 직접 실행 확인. 야간 호박색 미니멀 모드와 디지털 글래스 패널, 캘린더 리스트 모두 정상 표시.
+  - 캡처 시 캘린더 권한을 의도적으로 허용하지 않아 안내 문구가 표시됨 (권한 미허용 케이스 가독성도 함께 검증).
+- 알려진 제약 / 후속 작업:
+  - UIAutomator `dump` 명령이 Compose 화면에서 idle 상태를 잡지 못해 testTag 기반 좌표 추출이 어려움. 좌표는 캡처 이미지에서 시각적으로 추정. 향후 instrumented test로 재현성 보장 필요.
+  - Play Console 폰 스크린샷 비율 제한(약 2:1)을 정확히 맞추려면 좌우/상하 패딩 추가 후 재업로드가 필요할 수 있음. 거부 시 패딩 처리.
+  - 캘린더 권한을 허용한 상태의 캡처(실제 일정 표시)도 추가 캡처 검토.
+
 ## 2026-05-22 (UI 디자인 리뉴얼 1차 이식)
 
 - 작업: 사용자가 별도 워크스페이스(`D:/Project/dockmode-renew`)에서 진행한 디자인 리뉴얼을 본 저장소(`io.jeiel85.dockmode`) UI에 모두 이식. 화면 구성과 기능 매칭을 함께 가져왔으나, 정책 위반 의존성(Firebase, Retrofit, Moshi, OkHttp, Room, KSP, Roborazzi, Secrets Gradle Plugin)은 가져오지 않음.

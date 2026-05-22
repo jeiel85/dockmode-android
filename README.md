@@ -51,6 +51,22 @@ v0.1 기준으로 다음이 구현되어 있습니다.
 
 남은 항목은 [TASKS.md](TASKS.md)에서 확인할 수 있습니다.
 
+## 화면 미리보기
+
+리뉴얼된 디자인의 핵심 화면입니다. 캡처는 Galaxy S24(1080×2340)에서 디버그 빌드로 촬영했습니다. 모든 캡처는 [docs/screenshots/](docs/screenshots/)에 있습니다.
+
+| HomeScreen | SettingsScreen |
+|---|---|
+| <img src="docs/screenshots/01-home.png" alt="DockMode 홈" width="240"/> | <img src="docs/screenshots/02-settings.png" alt="DockMode 설정" width="240"/> |
+| DOCK MODE 라벨 헤더, 충전 상태 카드, 풀폭 대기 화면 시작 CTA, 캘린더/스크린세이버 카드 | 시계 스타일 3종 카드형 셀렉터, 토글 4종 + 설명, 개인정보 카드 |
+
+| Standby — Minimal | Standby — Digital | Standby — CalendarFocus |
+|---|---|---|
+| <img src="docs/screenshots/03-standby-minimal.png" alt="미니멀 시계" width="280"/> | <img src="docs/screenshots/04-standby-digital.png" alt="디지털 시계 + 다음 일정" width="280"/> | <img src="docs/screenshots/05-standby-calendar.png" alt="캘린더 중심 + 오늘 일정" width="280"/> |
+| 야간 호박색 톤, 거치 화면 가독성 우선 | 좌측 시계 + 우측 글래스 패널 "다음 일정" | 좌측 시계 + 우측 "오늘 일정" 리스트 |
+
+> 캘린더 권한이 꺼진 상태로 캡처되어 일정 영역에 안내 문구가 표시됩니다. 권한을 허용하면 실제 일정 제목과 시간이 표시됩니다. Play Store 등록용 사본은 [play_store/screenshots/](play_store/screenshots/)에 별도 보관합니다.
+
 ## 기술 스택
 
 | 영역 | 선택 |

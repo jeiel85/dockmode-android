@@ -116,8 +116,10 @@
 - [x] StandbyScreen 디지털 패널/캘린더 리스트/야간 호박색 모드 적용
 - [x] Material Icons Extended + Navigation Compose 의존성 추가
 - [x] 한국어/영어 문자열 보강 (토글 설명·닫기 버튼·일정 표시 꺼짐)
-- [ ] 실기기에서 새 디자인 가독성/번인/스타일 전환 동작 확인 (후속)
-- [ ] 디자인 리뉴얼 결과 스크린샷을 README/릴리즈 노트에 반영 (후속)
+- [x] 실기기(Galaxy S24)에서 새 디자인 3종 시계 스타일 전환·표시 확인
+- [x] 디자인 리뉴얼 결과 스크린샷을 README/Play Store 리소스에 반영 (`docs/screenshots/`, `play_store/screenshots/`)
+- [ ] 캘린더 권한 허용 상태의 standby 캡처 추가 (실제 일정 표시 케이스)
+- [ ] 장시간 표시 시 번인 위험 실측
 
 완료 기준:
 
@@ -137,6 +139,7 @@
 - [ ] 실기기 DreamService 검증 결과 HISTORY 기록
 - [ ] 앱 아이콘 디자인 정식 작업 (현재는 임시 어댑티브 아이콘)
 - [ ] Play Store 출시 전 앱명 `DockMode` 상표/중복 검토
-- [ ] `window.statusBarColor`/`navigationBarColor` deprecation 대응 (WindowInsetsController 기반 대체)
+- [x] `window.statusBarColor`/`navigationBarColor` deprecation 대응 (WindowInsetsController 기반 대체)
 - [ ] 새 디자인 라이트 모드 경로 검증 (현재 dark 기본값)
-- [ ] 리뉴얼 디자인 스크린샷을 README/Play Store 리소스에 반영
+- [x] 리뉴얼 디자인 스크린샷을 README/Play Store 리소스에 반영
+- [ ] Play Console 거부 시 스크린샷 정확히 2:1 비율로 패딩하여 재업로드
