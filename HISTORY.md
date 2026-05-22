@@ -14,10 +14,15 @@
 - 검증:
   - 워크플로 변경 후 main 푸시로 일반 빌드 단계가 그대로 동작하는지 CI에서 확인. 태그 트리거는 실제 태그 푸시 전까지 dry-run 불가 → 실제 푸시 시점에 재확인 필요.
   - `docs/releases/v0.1.0.md` 본문은 v0.1 실제 구현 항목 기준이므로 후속 변경 발생 시 함께 갱신.
-- 결과: 절차 정비 완료. v0.1.0 태그 실제 푸시는 사용자 확인 후 진행.
+- 결과: 절차 정비 완료. 사용자 승인 후 `v0.1.0` 태그 푸시 → 태그 트리거 CI(run 26276140568, 1m5s)가 모든 단계 통과하고 GitHub Release를 자동 생성. Release URL: <https://github.com/jeiel85/dockmode-android/releases/tag/v0.1.0>
+- 첨부된 산출물:
+  - `dockmode-v0.1.0-debug.apk` (≈ 9.85 MB)
+  - `dockmode-v0.1.0-release.aab` (≈ 2.33 MB, unsigned)
+  - `dockmode-v0.1.0-mapping.txt` (≈ 17.4 MB)
+- Release 본문은 `docs/releases/v0.1.0.md`가 정상 사용됨 (수기 노트 우선순위 동작 확인).
 - 후속 작업:
-  - 사용자 승인 후 `git tag -a v0.1.0 -m "DockMode v0.1.0" && git push origin v0.1.0`으로 첫 자동 Release 생성 확인.
   - 릴리즈 키스토어 구성과 서명된 AAB 생성 절차 정리.
+  - 첫 실기기 검증 후 v0.1.1 패치 또는 v0.2.0으로 다음 릴리즈 진행 (versionCode 증가 필수).
 
 ## 2026-05-22
 

@@ -1,5 +1,29 @@
 # CHANGELOG.md
 
+## v0.1.0 - 2026-05-22
+
+DockMode 첫 동작 빌드 릴리즈. 자세한 본문은 [docs/releases/v0.1.0.md](docs/releases/v0.1.0.md) 또는 [GitHub Release](https://github.com/jeiel85/dockmode-android/releases/tag/v0.1.0) 참고.
+
+### Added
+- 가로 전체화면 시계·날짜·요일 대기 화면 (`StandbyActivity`)
+- Android 스크린세이버(`StandbyDreamService`) 모드
+- HomeScreen, SettingsScreen, 시계 스타일 3종, OLED 번인 방지 위치 이동
+- BatteryManager 충전 상태, Calendar Provider 일정 조회, DataStore 설정 저장
+- 한국어/영어 문자열 리소스, 다크 테마, 어댑티브 런처 아이콘(임시)
+
+### Build / CI
+- 태그 푸시 시 GitHub Release 자동 생성, APK/AAB/mapping 첨부 (`dockmode-v0.1.0-*`)
+- ktlint/detekt + JUnit 단위 테스트 5종을 포함하는 GitHub Actions 워크플로
+
+### Documentation
+- README, RELEASE, docs/releases/README, play_store/release_notes/README 가이드 작성
+- ADR-001 ~ ADR-008 (`DECISIONS.md`)
+
+### Known Limitations
+- Release AAB는 unsigned. Play Store 업로드 전 키스토어 구성 필요.
+- 앱명 `DockMode` 상표/중복 검토 미완료.
+- 정식 앱 아이콘 디자인 미완료.
+
 ## Unreleased
 
 ### Build / CI
