@@ -14,6 +14,14 @@ complexity:
     active: false
   TooManyFunctions:
     active: false
+  LongParameterList:
+    active: true
+    functionThreshold: 8
+    constructorThreshold: 8
+    ignoreDefaultParameters: true
+    ignoreDataClasses: true
+    ignoreAnnotated:
+      - "Composable"
 
 naming:
   FunctionNaming:
