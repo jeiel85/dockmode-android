@@ -48,7 +48,7 @@ description: Android 충전 거치대용 시계와 일정 대시보드 앱
 - 네트워크 권한은 v1.0 범위에서 추가하지 않습니다.
 - 광고, 분석, 로그인, 결제, 원격 설정, crash reporting SDK는 사용하지 않습니다.
 
-자세한 내용은 [PRIVACY.md](https://github.com/jeiel85/dockmode-android/blob/main/PRIVACY.md)를 참고하세요.
+자세한 내용은 [개인정보 처리방침](privacy/)을 참고하세요.
 
 ## 더 알아보기
 

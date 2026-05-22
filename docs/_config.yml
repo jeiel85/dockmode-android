@@ -22,7 +22,6 @@ exclude:
   - GOALS.md
   - AGENTS.md
   - RELEASE.md
-  - PRIVACY.md
   - PROJECT_ID.md
   - SPEC.md
   - TECH_SPEC.md

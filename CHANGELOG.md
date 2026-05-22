@@ -26,6 +26,21 @@ DockMode 첫 동작 빌드 릴리즈. 자세한 본문은 [docs/releases/v0.1.0.
 
 ## Unreleased
 
+### Added
+- Play Console 최초 등록 자료 일괄 추가
+  - `play_store/listing/`: 한국어/영어 짧은·긴 설명, 카테고리·타깃 사용자, 데이터 보안 양식, 콘텐츠 등급(IARC) 설문 답변 초안 + 매핑 README
+  - `play_store/onboarding-checklist.md`: Play Console 클릭 단계 + 사용자/자동 구분 체크리스트
+  - `docs/branding-research.md`: Play Store 검색 결과·상표 등록 사전 점검·후보명·부제 권장안
+  - `docs/keystore-guide.md`: keytool 키스토어 생성, Play App Signing 옵트인, GitHub Actions Secrets 등록 단계
+  - `docs/privacy.md`: Play Console 입력용 개인정보 처리방침 공개 페이지 (Jekyll permalink `/privacy/`)
+- `app/build.gradle.kts` `signingConfigs.release`: 환경변수 4종(`DOCKMODE_KEYSTORE_PATH`, `_PASSWORD`, `DOCKMODE_KEY_PASSWORD`, `_ALIAS`) 모두 있을 때만 적용되는 conditional signing. 시크릿 미설정 시 기존 unsigned 빌드 동작 유지
+- GitHub Actions 워크플로 `Decode upload keystore` 단계: `DOCKMODE_KEYSTORE_BASE64` 시크릿이 있으면 임시 파일로 디코드 후 `bundleRelease`에 환경변수 전달
+
+### Changed
+- `PRIVACY.md` 상단에 공개 URL(`https://jeiel85.github.io/dockmode-android/privacy/`) 안내 추가
+- `docs/index.md` 개인정보 링크를 GitHub 마크다운 raw 대신 GitHub Pages 내부 페이지로 교체
+- `RELEASE.md` §7을 unsigned 메모에서 키스토어 가이드 요약·시크릿 흐름·체크리스트로 확장. §6 Play Store 체크리스트에 PRIVACY URL, listing 자료, 스크린샷, 상표 검토 항목 추가
+
 ### Changed
 - 시스템 바 색상 처리를 `WindowInsetsControllerCompat` 기반 라이트/다크 아이콘 토글로 교체. Android 15에서 deprecated된 `window.statusBarColor` / `navigationBarColor` 직접 호출 제거 (배경 색은 `enableEdgeToEdge` + 화면 배경에 위임).
 - UI 디자인 리뉴얼 1차 이식: `D:/Project/dockmode-renew` 시안의 화면 구성·컬러·타이포그래피를 본 프로젝트 패키지(`io.jeiel85.dockmode`)에 맞춰 가져옴.

@@ -122,14 +122,33 @@ gh release download vX.Y.Z --pattern 'dockmode-*-release.aab'
 - [ ] Release AAB 생성 커밋과 GitHub Release 태그 일치
 - [ ] mapping.txt 보존 (Play Console에 별도 업로드)
 - [ ] 실제 기기에서 StandbyActivity와 DreamService 수동 검증
-- [ ] 릴리즈 서명 설정 확인 (현재 저장소에는 keystore가 없으며, CI에서 unsigned AAB가 생성됨 → 실제 업로드 전 Play App Signing 구성 필요)
-- [ ] Play Store 출시 전 앱명 `DockMode` 상표/중복 검토 (TODO, ADR-004 참조)
+- [ ] 릴리즈 서명 설정 확인 ([docs/keystore-guide.md](docs/keystore-guide.md) 절차를 따라 키스토어/시크릿이 등록되어 있는지)
+- [ ] 개인정보 처리방침 URL 입력값이 <https://jeiel85.github.io/dockmode-android/privacy/> 인지 확인
+- [ ] [play_store/listing/](play_store/listing/) 의 KR/EN 짧은·긴 설명, 카테고리, 데이터 보안 양식, 콘텐츠 등급 답변을 Play Console에 반영했는지
+- [ ] [play_store/screenshots/](play_store/screenshots/) 5종 스크린샷 업로드
+- [ ] Play Store 출시 전 앱명 `DockMode` 상표/중복 검토 ([docs/branding-research.md](docs/branding-research.md) 참고, 최종 결정은 사용자/변호사)
 
-## 7. 현재 빌드 상태 메모
+## 7. 업로드 키스토어 / Play App Signing
+
+전체 단계는 별도 가이드 [docs/keystore-guide.md](docs/keystore-guide.md) 또는 공개 URL <https://jeiel85.github.io/dockmode-android/keystore-guide/>를 따른다. 핵심 요약:
+
+1. **(1회) 사용자 로컬**에서 `keytool`로 업로드 키스토어 생성 (`*.jks`).
+2. **(1회) Play Console**에서 `DockMode` 앱을 만들고 **Play App Signing 옵트인**.
+3. **(1회) GitHub Actions Secrets**에 4종 등록:
+   - `DOCKMODE_KEYSTORE_BASE64` — `*.jks`를 base64 인코딩한 문자열
+   - `DOCKMODE_KEYSTORE_PASSWORD`
+   - `DOCKMODE_KEY_PASSWORD`
+   - `DOCKMODE_KEY_ALIAS`
+4. **(자동) CI**가 시크릿이 있으면 `Decode upload keystore` 단계에서 임시 파일로 디코드하고, `bundleRelease`에 환경변수를 전달해 서명된 AAB를 생성한다. 시크릿이 없으면 unsigned AAB(현재 동작)로 폴백된다.
+5. **(매 출시) 사용자**가 서명된 AAB를 Play Console 내부 테스트 트랙에 업로드.
+
+`app/build.gradle.kts`의 `signingConfigs.release`는 4개 환경변수가 모두 비어 있지 않을 때만 적용된다. 따라서 시크릿 미등록 환경에서는 기존 unsigned 빌드 동작이 보존된다.
+
+### 현재 빌드 상태 메모
 
 - v0.1.0 시점 `versionName=0.1.0`, `versionCode=1`.
-- 릴리즈 키스토어가 저장소에 없으므로 `bundleRelease`는 **unsigned AAB**를 생성한다. Play Store 업로드 전 키스토어 구성과 서명 설정이 별도 작업으로 필요하다.
-- CI 워크플로는 `permissions: contents: write`로 Release 생성 권한을 가진다. 시크릿 추가는 필요 없다 (`GITHUB_TOKEN` 자동 주입).
+- 첫 Play Store 업로드 전 위 1~3단계 (키스토어 생성 + Play Console 앱 생성 + GitHub Secrets 등록)가 모두 끝나야 자동 서명 빌드가 가능하다.
+- CI 워크플로는 `permissions: contents: write`로 Release 생성 권한을 가진다. `GITHUB_TOKEN`은 자동 주입된다.
 
 ## 8. 롤백 / 잘못된 태그 정리
 

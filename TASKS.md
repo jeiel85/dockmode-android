@@ -93,13 +93,22 @@
 
 ## Milestone 5: 배포 준비
 
-- [ ] Release AAB 생성 (CI 검증)
-- [ ] Debug APK 생성 (CI 검증)
-- [ ] mapping.txt 산출물 보존 (CI 워크플로 업로드 단계 존재)
-- [ ] GitHub Release 노트 작성 (첫 태그 시점)
-- [ ] Play Store 릴리즈 노트 초안 작성
-- [ ] 개인정보 처리 안내 검토 (PRIVACY.md 일치 확인)
-- [ ] 앱명/패키지명/버전 일치 확인 (`versionName=0.1.0`)
+- [x] Release AAB 생성 (CI 검증)
+- [x] Debug APK 생성 (CI 검증)
+- [x] mapping.txt 산출물 보존 (CI 워크플로 업로드 단계 존재)
+- [x] GitHub Release 노트 작성 (v0.1.0)
+- [x] Play Store 릴리즈 노트 초안 작성 (`play_store/release_notes/v0.1.0.txt`)
+- [x] 개인정보 처리 안내 검토 + 공개 URL 노출 (`https://jeiel85.github.io/dockmode-android/privacy/`)
+- [x] 앱명/패키지명/버전 일치 확인 (`versionName=0.1.0`)
+- [x] Play Console 등록용 자료 일괄 작성 (`play_store/listing/` + `play_store/onboarding-checklist.md`)
+- [x] 키스토어/Play App Signing 가이드 + 환경변수 기반 자동 서명 인프라 (`docs/keystore-guide.md`)
+- [x] DockMode 상표·중복명 사전 리서치 (`docs/branding-research.md`)
+- [ ] (사용자) USPTO TSDR / KIPRIS / EUIPO / J-PlatPat 직접 조회로 상표 충돌 최종 확인
+- [ ] (사용자) Play Developer 계정 등록 ($25) + Play Console에서 DockMode 앱 생성 + Play App Signing 옵트인
+- [ ] (사용자) 업로드 키스토어 생성 + GitHub Actions Secrets 4종 등록
+- [ ] (사용자) 첫 서명 AAB를 내부 테스트 트랙에 업로드 + 본인 기기로 검증
+- [ ] 정식 앱 아이콘 (512×512) 디자인
+- [ ] Play Store 피처 그래픽 (1024×500) 디자인
 
 완료 기준:
 

@@ -42,7 +42,29 @@ jobs:
       - name: Assemble debug APK
         run: ./gradlew assembleDebug
 
+      - name: Decode upload keystore (when secrets present)
+        id: keystore
+        env:
+          DOCKMODE_KEYSTORE_BASE64: ${{ secrets.DOCKMODE_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "${DOCKMODE_KEYSTORE_BASE64}" ]; then
+            mkdir -p "$RUNNER_TEMP/keystore"
+            KS_PATH="$RUNNER_TEMP/keystore/dockmode-upload.jks"
+            echo "$DOCKMODE_KEYSTORE_BASE64" | base64 -d > "$KS_PATH"
+            echo "path=$KS_PATH" >> "$GITHUB_OUTPUT"
+            echo "present=true" >> "$GITHUB_OUTPUT"
+            echo "Upload keystore decoded to $KS_PATH"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::DOCKMODE_KEYSTORE_BASE64 not set — release AAB will be unsigned."
+          fi
+
       - name: Bundle release AAB
+        env:
+          DOCKMODE_KEYSTORE_PATH: ${{ steps.keystore.outputs.path }}
+          DOCKMODE_KEYSTORE_PASSWORD: ${{ secrets.DOCKMODE_KEYSTORE_PASSWORD }}
+          DOCKMODE_KEY_PASSWORD: ${{ secrets.DOCKMODE_KEY_PASSWORD }}
+          DOCKMODE_KEY_ALIAS: ${{ secrets.DOCKMODE_KEY_ALIAS }}
         run: ./gradlew bundleRelease
 
       - name: Collect release artifacts (rename with tag when present)

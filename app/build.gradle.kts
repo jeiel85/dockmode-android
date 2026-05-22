@@ -25,6 +25,25 @@ android {
         archivesName.set("dockmode")
     }
 
+    signingConfigs {
+        create("release") {
+            val storeFilePath = System.getenv("DOCKMODE_KEYSTORE_PATH")
+            val storePwd = System.getenv("DOCKMODE_KEYSTORE_PASSWORD")
+            val keyPwd = System.getenv("DOCKMODE_KEY_PASSWORD")
+            val keyAliasEnv = System.getenv("DOCKMODE_KEY_ALIAS")
+            if (!storeFilePath.isNullOrBlank() &&
+                !storePwd.isNullOrBlank() &&
+                !keyPwd.isNullOrBlank() &&
+                !keyAliasEnv.isNullOrBlank()
+            ) {
+                storeFile = file(storeFilePath)
+                storePassword = storePwd
+                keyAlias = keyAliasEnv
+                keyPassword = keyPwd
+            }
+        }
+    }
+
     buildTypes {
         debug {
             isMinifyEnabled = false
@@ -38,6 +57,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            val releaseSigning = signingConfigs.getByName("release")
+            if (releaseSigning.storeFile != null) {
+                signingConfig = releaseSigning
+            }
         }
     }
 

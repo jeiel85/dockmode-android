@@ -1,5 +1,9 @@
 # PRIVACY.md
 
+> 정식 공개 URL: <https://jeiel85.github.io/dockmode-android/privacy/>
+> 본 파일은 저장소 내부 사본입니다. 외부에 공개되는 정책 본문은 위 URL의 페이지가 기준입니다.
+> 변경 시 [docs/privacy.md](docs/privacy.md)와 함께 동기 갱신합니다.
+
 # DockMode 개인정보 및 권한 정책
 
 ## 1. 기본 원칙

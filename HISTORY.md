@@ -1,5 +1,30 @@
 # HISTORY.md
 
+## 2026-05-23 (Play Console 최초 등록 사전 자료 준비)
+
+- 작업: Play Console에 DockMode를 최초 등록하기 위한 자료를 일괄 정비. 등록 자체(콘솔 클릭, 결제, 약관 동의, 키스토어 생성)는 `AGENTS.md §8` 사전 승인 항목이라 사용자 액션으로 남기고, 그 외 자동 정비 가능한 부분은 모두 끝냄.
+- 정책 점검 결과:
+  - 외부 콘솔 작업 / 결제 / 시크릿(키스토어) 생성 / 상표 최종 결정은 `AGENTS.md §2`(자동 진행 제외), `§8`(사전 승인 필요), `ADR-004`(앱명 출시 전 상표 검토)로 사용자 직접 수행.
+  - 저장소가 끝낼 수 있는 것: 메타데이터/양식 초안, 공개 URL, 빌드 자동 서명 인프라, 단계별 체크리스트, 상표 사전 리서치.
+- 추가/변경 파일:
+  - 신규: `play_store/listing/README.md`, `play_store/listing/category-and-audience.md`, `play_store/listing/data-safety-form.md`, `play_store/listing/content-rating-answers.md`, `play_store/listing/ko-KR/{short,long}-description.txt`, `play_store/listing/en-US/{short,long}-description.txt`, `play_store/onboarding-checklist.md`
+  - 신규: `docs/keystore-guide.md` (permalink `/keystore-guide/`), `docs/privacy.md` (permalink `/privacy/`), `docs/branding-research.md` (permalink `/branding-research/`)
+  - 갱신: `docs/_config.yml` (PRIVACY.md exclude 제거, 의도는 없으나 무해), `docs/index.md` (개인정보 링크를 Pages 내부로), `PRIVACY.md` (공개 URL 안내 추가), `RELEASE.md` (§6/§7 갱신)
+  - 갱신: `app/build.gradle.kts` (env 4종 모두 있을 때만 적용되는 release signingConfig)
+  - 갱신: `.github/workflows/android-ci.yml` (`Decode upload keystore` 단계 추가, `Bundle release AAB`에 env 4종 전달)
+- 상표 리서치 (`docs/branding-research.md`):
+  - Play Store 영문 검색 결과 `DockMode` 정확명 충돌은 발견되지 않음.
+  - 유사 컨셉 강력 경쟁자: DockScreen - StandBy Mode, StandBy Mode: Clock & Widgets, Dock Station Digital Clock.
+  - USPTO/KIPRIS/EUIPO/J-PlatPat 정식 상표 검색은 사용자 직접 수행 필요. 충돌 시 후보명(DeskDock, DockGlance, BedsideDock, JeielDock 등) 제시.
+  - Play Console 앱 이름은 부제 포함 `DockMode - 거치대 시계 & 일정` 권장 (50자 이내).
+- 검증:
+  - `./gradlew ktlintCheck assembleDebug bundleRelease` 모두 성공. 시크릿 없는 unsigned AAB 경로가 기존과 동일하게 동작함을 확인.
+  - 상표 결과는 자동 검색 한계로 사용자 4개 DB 직접 조회로 보강 필요.
+- 후속 작업:
+  - (사용자) Play Developer 계정 등록 + 결제 + 상표 4개 DB 조회 + 키스토어 생성 + Play Console 첫 등록은 `play_store/onboarding-checklist.md` 단계 A~I로 진행.
+  - 정식 앱 아이콘 512×512 / 피처 그래픽 1024×500 디자인은 별도 후속.
+  - 캘린더 권한 허용 상태 standby 스크린샷 보강.
+
 ## 2026-05-23 (statusBar deprecation 대응 + 실기기 스크린샷)
 
 - 작업: 리뉴얼 디자인 이식 직후 남아 있던 `window.statusBarColor` / `navigationBarColor` deprecation 경고를 정리하고, 새 디자인을 README/Play Store에 반영하기 위해 Galaxy S24(SM-S921N) 실기기로 핵심 화면 5종을 캡처.

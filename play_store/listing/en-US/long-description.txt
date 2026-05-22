@@ -1,0 +1,36 @@
+DockMode turns the landscape screen of your phone into a dedicated clock and calendar dashboard whenever you place it on a charging dock.
+
+[Key features]
+
+· Large landscape clock with date and day of week
+· Three clock styles: minimalist amber night view, digital + next-event glass panel, calendar-focused with today's event list
+· Register as an Android screen saver (DreamService) to show the standby screen automatically while docked
+· Real-time charging state (charging / full / on battery)
+· OLED burn-in guard pixel-shift, keep-screen-on, low-brightness night mode, and other docking-friendly options
+
+[Privacy first]
+
+· DockMode does not request any network permission. No data is sent to any external server.
+· Calendar permission (READ_CALENDAR) is requested only when you turn on the event display feature.
+· Calendar events are kept in memory for display only. They are not stored in an internal database or transmitted.
+· No advertising, analytics, login, payment, or tracking SDKs are included.
+
+[How to use]
+
+1. Install the app and tap "Start standby" to see the landscape full-screen standby view.
+2. To see calendar events, tap "Connect calendar" and grant calendar access.
+3. In Android Settings → Display → Screen saver, choose DockMode to start the standby screen automatically when docked.
+
+[Supported environment]
+
+· Android 8.0 (API 26) or later
+· Optimized for landscape docking
+· Korean and English supported
+
+[Known limits]
+
+· This is an initial release. The official app icon and some visual assets are still being polished.
+· Weather, external calendar sync, and account sign-in are being evaluated as optional features for a later version.
+
+For feedback and bug reports, please open an issue on GitHub:
+https://github.com/jeiel85/dockmode-android
