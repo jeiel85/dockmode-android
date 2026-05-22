@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.DockMode" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/standby_background</item>
+        <item name="android:statusBarColor">@color/standby_background</item>
+        <item name="android:navigationBarColor">@color/standby_background</item>
+    </style>
+
+    <style name="Theme.DockMode.Standby" parent="Theme.DockMode">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+</resources>

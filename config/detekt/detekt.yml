@@ -1,0 +1,28 @@
+build:
+  maxIssues: 0
+
+style:
+  MagicNumber:
+    active: false
+  ReturnCount:
+    active: false
+  WildcardImport:
+    active: false
+
+complexity:
+  LongMethod:
+    active: false
+  TooManyFunctions:
+    active: false
+
+naming:
+  FunctionNaming:
+    active: true
+    ignoreAnnotated:
+      - "Composable"
+  TopLevelPropertyNaming:
+    active: false
+
+empty-blocks:
+  EmptyFunctionBlock:
+    active: false

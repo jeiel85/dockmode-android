@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DockMode</string>
+    <string name="app_tagline">충전 거치대용 시계와 일정 대시보드</string>
+
+    <string name="home_charging_status_title">충전 상태</string>
+    <string name="home_charging_state_charging">충전 중</string>
+    <string name="home_charging_state_full">완충됨</string>
+    <string name="home_charging_state_discharging">충전 중 아님</string>
+    <string name="home_charging_state_unknown">상태 확인 중</string>
+
+    <string name="home_start_standby">대기 화면 시작</string>
+    <string name="home_open_settings">설정</string>
+    <string name="home_calendar_card_title">캘린더 연동</string>
+    <string name="home_calendar_card_body">오늘 일정과 다음 일정을 대기 화면에 표시합니다. 권한이 필요할 때만 요청합니다.</string>
+    <string name="home_calendar_card_action_request">캘린더 연동하기</string>
+    <string name="home_calendar_card_action_open_settings">앱 설정 열기</string>
+    <string name="home_calendar_card_status_granted">캘린더 권한 허용됨</string>
+    <string name="home_calendar_card_status_denied">권한이 꺼져 있어 일정을 표시할 수 없습니다.</string>
+    <string name="home_calendar_card_status_permanently_denied">다시 묻지 않음 상태입니다. 시스템 설정에서 권한을 허용해 주세요.</string>
+    <string name="home_calendar_card_status_unknown">권한 상태를 확인하지 못했습니다.</string>
+
+    <string name="home_dream_card_title">스크린세이버 모드</string>
+    <string name="home_dream_card_body">Android 설정의 스크린세이버에서 DockMode를 선택하면 충전 거치 상태에서 자동으로 대기 화면이 표시됩니다.</string>
+    <string name="home_dream_card_action_open_settings">스크린세이버 설정 열기</string>
+    <string name="home_dream_card_action_unavailable">스크린세이버 설정을 열 수 없는 기기입니다.</string>
+
+    <string name="standby_title">대기 화면</string>
+    <string name="standby_charging">충전 중</string>
+    <string name="standby_full">완충</string>
+    <string name="standby_discharging">전원 연결 없음</string>
+    <string name="standby_unknown">상태 확인 중</string>
+    <string name="standby_next_event_label">다음 일정</string>
+    <string name="standby_today_label">오늘 일정</string>
+    <string name="standby_no_events">예정된 일정이 없습니다.</string>
+    <string name="standby_calendar_permission_required">캘린더 권한이 꺼져 있어 일정을 표시할 수 없습니다.</string>
+    <string name="standby_calendar_permission_loading">일정 정보를 불러오는 중입니다.</string>
+    <string name="standby_calendar_load_error">일정을 불러오지 못했습니다.</string>
+    <string name="standby_all_day_event">종일</string>
+
+    <string name="settings_title">설정</string>
+    <string name="settings_clock_style">시계 스타일</string>
+    <string name="settings_clock_style_minimal">미니멀</string>
+    <string name="settings_clock_style_digital">디지털</string>
+    <string name="settings_clock_style_calendar">캘린더 중심</string>
+    <string name="settings_show_calendar">일정 표시</string>
+    <string name="settings_night_mode">야간 모드</string>
+    <string name="settings_burn_in_guard">번인 방지 위치 이동</string>
+    <string name="settings_keep_screen_on">화면 켜짐 유지</string>
+    <string name="settings_privacy_section">개인정보와 권한</string>
+    <string name="settings_privacy_body">캘린더 데이터는 기기 밖으로 전송하지 않으며 화면 표시 외 다른 용도로 사용하지 않습니다.</string>
+
+    <string name="action_back">뒤로</string>
+    <string name="action_cancel">취소</string>
+    <string name="action_grant">허용</string>
+</resources>
