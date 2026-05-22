@@ -20,9 +20,13 @@ class SettingsViewModel(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000L), DockModeSettings())
 
     fun setClockStyle(style: ClockStyle) = viewModelScope.launch { repository.setClockStyle(style) }
+
     fun setShowCalendar(enabled: Boolean) = viewModelScope.launch { repository.setShowCalendar(enabled) }
+
     fun setNightMode(enabled: Boolean) = viewModelScope.launch { repository.setNightMode(enabled) }
+
     fun setBurnInGuard(enabled: Boolean) = viewModelScope.launch { repository.setBurnInGuard(enabled) }
+
     fun setKeepScreenOn(enabled: Boolean) = viewModelScope.launch { repository.setKeepScreenOn(enabled) }
 
     class Factory(private val container: AppContainer) : ViewModelProvider.Factory {
