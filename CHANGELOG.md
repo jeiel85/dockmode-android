@@ -26,12 +26,29 @@ DockMode 첫 동작 빌드 릴리즈. 자세한 본문은 [docs/releases/v0.1.0.
 
 ## Unreleased
 
+### Changed
+- UI 디자인 리뉴얼 1차 이식: `D:/Project/dockmode-renew` 시안의 화면 구성·컬러·타이포그래피를 본 프로젝트 패키지(`io.jeiel85.dockmode`)에 맞춰 가져옴.
+  - HomeScreen: "DOCK MODE" 라벨 헤더, 충전 상태 카드(아이콘·펄스 애니메이션), 캘린더/스크린세이버 카드 아이콘화, Start Standby 풀폭 CTA 강조
+  - SettingsScreen: 시계 스타일 3종을 미리보기가 포함된 카드형 세그먼트 셀렉터로 교체, 토글 항목마다 설명 문구 추가, 개인정보 카드 강조
+  - StandbyScreen: 디지털 레이아웃에 우측 글래스 패널, 캘린더 포커스 레이아웃에 이벤트 리스트 카드, 미니멀 모드 야간 호박색 톤, 우상단 닫기 버튼 추가
+  - MainActivity: `androidx.navigation.compose` 기반 `NavHost`로 home ↔ settings 전환
+  - 테마: 새 "Premium Ambient Slate & Obsidian" 다크 팔레트 + 라이트 팔레트, 상태바/네비게이션바 색상 동기화, 풍부한 Typography
+- 한국어/영어 문자열 보강: 설정 토글 설명 문구 4종, 대기 화면 닫기/일정 표시 꺼짐 문구 추가
+
 ### Added
 - `scripts/export-release-to-desktop.ps1`: 릴리즈된 AAB와 Play Store 노트를 사용자 바탕화면에 `dockmode-<tag>.aab` + `dockmode-<tag>-release-notes.txt` 형식으로 내보내는 PowerShell 스크립트 (최신 태그 자동 감지 지원)
+- `androidx.compose.material:material-icons-core` / `material-icons-extended` 의존성 (Bolt, CalendarToday, Monitor, Settings, PlayArrow, CheckCircle, Warning, Info, ArrowBack, Close, EventNote 사용)
+- `androidx.navigation:navigation-compose` 의존성 (홈 ↔ 설정 화면 전환)
 
 ### Documentation
 - `RELEASE.md` §4-1 "바탕화면으로 산출물 내보내기" 추가
 - `docs/releases/README.md` 흐름에 바탕화면 내보내기 단계 추가
+- `HISTORY.md`에 2026-05-22 디자인 리뉴얼 1차 이식 작업 기록
+- `DECISIONS.md` ADR-009 (외부 디자인 시안 이식 정책) 추가
+
+### Verification
+- 로컬: `./gradlew ktlintCheck detekt testDebugUnitTest assembleDebug lintDebug` 모두 성공 (Windows + JDK 17 + Android SDK)
+- CI: 푸시 후 GitHub Actions 결과 확인 예정
 
 ### Added
 - Kotlin + Jetpack Compose + Gradle Kotlin DSL 기반 Android 앱 골격 구성 (`namespace`/`applicationId` `io.jeiel85.dockmode`, minSdk 26, compileSdk 35)

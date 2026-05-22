@@ -4,10 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import io.jeiel85.dockmode.home.HomeScreen
 import io.jeiel85.dockmode.settings.SettingsScreen
 import io.jeiel85.dockmode.standby.StandbyActivity
@@ -16,25 +19,47 @@ import io.jeiel85.dockmode.ui.theme.DockModeTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val container = (application as DockModeApplication).container
+        enableEdgeToEdge()
+        val appContainer = (application as DockModeApplication).container
         setContent {
             DockModeTheme {
-                var showSettings by remember { mutableStateOf(false) }
-                if (showSettings) {
-                    SettingsScreen(
-                        appContainer = container,
-                        onBack = { showSettings = false },
-                    )
-                } else {
-                    HomeScreen(
-                        appContainer = container,
-                        onStartStandby = {
-                            startActivity(Intent(this, StandbyActivity::class.java))
-                        },
-                        onOpenSettings = { showSettings = true },
-                    )
-                }
+                AppNavigation(
+                    appContainer = appContainer,
+                    onStartStandby = {
+                        startActivity(Intent(this, StandbyActivity::class.java))
+                    },
+                )
             }
+        }
+    }
+}
+
+private const val ROUTE_HOME = "home"
+private const val ROUTE_SETTINGS = "settings"
+
+@Composable
+fun AppNavigation(
+    appContainer: AppContainer,
+    onStartStandby: () -> Unit,
+) {
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = ROUTE_HOME,
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        composable(ROUTE_HOME) {
+            HomeScreen(
+                appContainer = appContainer,
+                onStartStandby = onStartStandby,
+                onOpenSettings = { navController.navigate(ROUTE_SETTINGS) },
+            )
+        }
+        composable(ROUTE_SETTINGS) {
+            SettingsScreen(
+                appContainer = appContainer,
+                onBack = { navController.popBackStack() },
+            )
         }
     }
 }

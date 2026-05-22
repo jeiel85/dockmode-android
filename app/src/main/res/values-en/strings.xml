@@ -44,13 +44,20 @@
     <string name="settings_clock_style_digital">Digital</string>
     <string name="settings_clock_style_calendar">Calendar focus</string>
     <string name="settings_show_calendar">Show calendar</string>
-    <string name="settings_night_mode">Night mode</string>
+    <string name="settings_show_calendar_desc">Show calendar events alongside the standby clock.</string>
+    <string name="settings_night_mode">Night low-brightness mode</string>
+    <string name="settings_night_mode_desc">Switch to a warm low-glare tone in dark surroundings.</string>
     <string name="settings_burn_in_guard">Burn-in guard</string>
+    <string name="settings_burn_in_guard_desc">Slowly shift static elements to prevent OLED burn-in.</string>
     <string name="settings_keep_screen_on">Keep screen on</string>
+    <string name="settings_keep_screen_on_desc">Prevent the screen from turning off while docked and charging.</string>
     <string name="settings_privacy_section">Privacy &amp; permissions</string>
     <string name="settings_privacy_body">Calendar data never leaves your device and is only used to render the standby screen.</string>
+
+    <string name="standby_calendar_display_off">Calendar display is turned off.</string>
 
     <string name="action_back">Back</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_grant">Allow</string>
+    <string name="action_close_standby">Close standby</string>
 </resources>

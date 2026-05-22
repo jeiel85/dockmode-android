@@ -107,6 +107,24 @@
 - GitHub Actions 성공
 - Release 산출물 크기 0이 아님
 
+## Milestone 6: UI 디자인 리뉴얼
+
+- [x] 외부 시안(`D:/Project/dockmode-renew`) 분석 및 정책 충돌 항목 식별
+- [x] 새 컬러 팔레트/Typography를 `io.jeiel85.dockmode` 패키지로 이식
+- [x] HomeScreen 카드/CTA/아이콘 디자인 갱신
+- [x] SettingsScreen 카드형 시계 스타일 셀렉터 + 토글 설명 적용
+- [x] StandbyScreen 디지털 패널/캘린더 리스트/야간 호박색 모드 적용
+- [x] Material Icons Extended + Navigation Compose 의존성 추가
+- [x] 한국어/영어 문자열 보강 (토글 설명·닫기 버튼·일정 표시 꺼짐)
+- [ ] 실기기에서 새 디자인 가독성/번인/스타일 전환 동작 확인 (후속)
+- [ ] 디자인 리뉴얼 결과 스크린샷을 README/릴리즈 노트에 반영 (후속)
+
+완료 기준:
+
+- 로컬: ktlint, detekt, testDebugUnitTest, assembleDebug, lintDebug 모두 성공 (확인됨)
+- CI: GitHub Actions 동일 단계 통과 (푸시 후 확인)
+- 실기기: 미니멀/디지털/캘린더 포커스 3종 화면이 새 레이아웃대로 표시되고 닫기 버튼이 동작 (후속)
+
 ## 후속 작업 후보
 
 - [ ] 날씨 API 연동 검토: 네트워크 권한과 외부 API 승인 필요
@@ -119,3 +137,6 @@
 - [ ] 실기기 DreamService 검증 결과 HISTORY 기록
 - [ ] 앱 아이콘 디자인 정식 작업 (현재는 임시 어댑티브 아이콘)
 - [ ] Play Store 출시 전 앱명 `DockMode` 상표/중복 검토
+- [ ] `window.statusBarColor`/`navigationBarColor` deprecation 대응 (WindowInsetsController 기반 대체)
+- [ ] 새 디자인 라이트 모드 경로 검증 (현재 dark 기본값)
+- [ ] 리뉴얼 디자인 스크린샷을 README/Play Store 리소스에 반영

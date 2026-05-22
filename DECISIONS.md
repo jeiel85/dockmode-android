@@ -171,3 +171,26 @@ v1.0까지는 Google Calendar REST API를 사용하지 않고 Android Calendar P
 
 - 향후 Compose/Kotlin 업그레이드 시 BOM과 플러그인 버전을 함께 갱신한다.
 - ktlint/detekt 도구 버전은 별도 후속 작업으로 정기 갱신한다.
+
+---
+
+## ADR-009: 외부 디자인 시안(`dockmode-renew`) 이식 정책
+
+날짜: 2026-05-22
+
+### 결정
+
+사용자가 별도 워크스페이스에서 AI Studio 기반으로 작업한 UI 디자인을 본 저장소로 가져올 때, **화면 구성·컬러·타이포그래피·아이콘 사용 패턴은 그대로 이식**하되, **빌드/배포/외부 서비스 의존성은 가져오지 않는다.** 패키지명은 본 저장소 식별값(`io.jeiel85.dockmode`)으로 변환한다.
+
+### 이유
+
+- 시안 프로젝트는 AI Studio 기본 namespace(`com.example`)와 applicationId(`com.aistudio.dockmode.vbxwqh`)를 사용하므로 본 저장소 식별값과 충돌한다.
+- 시안은 Firebase BOM, Retrofit, OkHttp, Moshi, Room, KSP, Roborazzi, Secrets Gradle Plugin을 포함하지만, 본 프로젝트 정책(`AGENTS.md §1.1`, ADR-002/ADR-003)은 네트워크 권한·외부 API·계정 연동·crash reporting을 금지한다.
+- UI 디자인은 사용자 경험에 직접 기여하므로 이식 대상이지만, 위 의존성들은 정책 충돌 또는 외부 콘솔 설정이 필요해 사전 승인 대상이다.
+
+### 영향
+
+- 디자인 이식 시 필요한 최소 의존성만 추가한다(이번 작업: `material-icons-core`, `material-icons-extended`, `navigation-compose`).
+- 시안의 `MainActivity.NavHost` 패턴은 채택하여 향후 화면 추가 시 라우팅이 용이하다.
+- 시안의 라이트 모드 컬러 스킴도 함께 가져오지만, 기본값은 다크 모드를 유지하여 베드사이드 UX를 보전한다.
+- 시안에 의도된 야간 호박색(Amber) 톤은 미니멀 시계 스타일에서만 활성화되어 OLED 번인·눈부심 방지 정책과 조화롭게 동작한다.

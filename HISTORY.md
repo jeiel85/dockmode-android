@@ -1,5 +1,36 @@
 # HISTORY.md
 
+## 2026-05-22 (UI 디자인 리뉴얼 1차 이식)
+
+- 작업: 사용자가 별도 워크스페이스(`D:/Project/dockmode-renew`)에서 진행한 디자인 리뉴얼을 본 저장소(`io.jeiel85.dockmode`) UI에 모두 이식. 화면 구성과 기능 매칭을 함께 가져왔으나, 정책 위반 의존성(Firebase, Retrofit, Moshi, OkHttp, Room, KSP, Roborazzi, Secrets Gradle Plugin)은 가져오지 않음.
+- 가져온 디자인 변경 사항:
+  - 새 컬러 팔레트 "Premium Ambient Slate & Obsidian" (SpaceBlue/SpaceIndigo/CalmTeal/CardSlate/GlassObsidian/StarlightIvory 등) — `ui/theme/Color.kt`
+  - 다크/라이트 컬러 스킴 + 상태바·네비게이션바 동기화 — `ui/theme/Theme.kt`
+  - 풍부한 Typography (displayLarge ~ labelMedium, 모노스페이스 시계용 폰트) — `ui/theme/Type.kt`
+  - HomeScreen: "DOCK MODE" 라벨 헤더, 충전 상태 카드(아이콘+펄스 애니메이션), Calendar/DreamService 카드 아이콘화, 풀폭 Start Standby CTA, 설정 진입 OutlinedButton
+  - SettingsScreen: 시계 스타일 3종 카드형 세그먼트 셀렉터(미리보기 "12:00" / "12:00:30" / "12 / 일정"), 토글 + 설명 문구, 개인정보 카드
+  - StandbyScreen: 디지털 레이아웃 우측 글래스 패널, 캘린더 포커스 레이아웃 이벤트 리스트, 미니멀 모드 야간 호박색 톤(`animateColorAsState`), 우상단 닫기 버튼
+  - MainActivity: `androidx.navigation.compose` 기반 `NavHost`로 home ↔ settings 화면 전환
+- 변경 파일:
+  - 갱신 Kotlin: `MainActivity.kt`, `home/HomeScreen.kt`, `settings/SettingsScreen.kt`, `standby/StandbyScreen.kt`, `ui/theme/{Color,Theme,Type}.kt`
+  - 갱신 리소스: `app/src/main/res/values/strings.xml`, `values-en/strings.xml` (설정 토글 설명, 닫기 버튼, 일정 표시 꺼짐 문구 추가)
+  - 갱신 빌드: `gradle/libs.versions.toml`(material-icons-core, material-icons-extended, navigation-compose 추가), `app/build.gradle.kts`(세 의존성 추가)
+- 유지된 파일(패키지/구조 동일하여 변경 불필요): `DockModeApplication.kt`, `home/HomeViewModel.kt`, `settings/SettingsViewModel.kt`, `standby/{StandbyActivity,StandbyDreamService,StandbyRoute,StandbyUiState,StandbyViewModel}.kt`, `data/**`, `domain/**`, `util/**`, `AndroidManifest.xml`, `res/values/{colors,themes}.xml`, `res/values-night/themes.xml`
+- 의도적으로 가져오지 않은 항목 (정책 충돌):
+  - Firebase BOM, Retrofit, Moshi, OkHttp logging interceptor — 네트워크/외부 API 미허용
+  - Room, KSP — 로컬 DB 비도입 정책
+  - Roborazzi — 추가 테스트 인프라(스크린샷 테스트) 도입 보류
+  - Secrets Gradle Plugin / `.env` — API 키 미사용 정책
+  - AI Studio 기본 namespace/applicationId(`com.example` / `com.aistudio.dockmode.vbxwqh`) — 기존 식별값(`io.jeiel85.dockmode`) 유지
+- 검증:
+  - `./gradlew ktlintCheck` ✓
+  - `./gradlew detekt` ✓
+  - `./gradlew testDebugUnitTest` ✓ (Formatters, CalendarFilters, BurnInOffset, BatteryStatusMapper, CalendarRepositoryRange 5종 통과)
+  - `./gradlew assembleDebug` ✓ (debug APK 생성)
+  - `./gradlew lintDebug` ✓ (BUILD SUCCESSFUL)
+  - 경고 1건: `window.statusBarColor` / `navigationBarColor`가 Android 15에서 deprecated. OLED 검정 배경 유지를 위해 의도적으로 유지. 후속 작업으로 `WindowInsetsController` 기반 대체 검토.
+- 결과: 디자인 리뉴얼 1차 이식 완료. 커밋·푸시 후 GitHub Actions에서 동일 결과 확인 예정. 실기기에서 새 디자인의 가독성/번인 위험/세 시계 스타일 전환 동작은 후속 작업으로 분리.
+
 ## 2026-05-22
 
 - 작업: 새 버전 만들기 절차 정비. `nightseed-survivor` 저장소의 태그 트리거 자동 Release 패턴을 DockMode에 적용.
