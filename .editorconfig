@@ -17,6 +17,11 @@ ktlint_standard_no-empty-first-line-in-class-body = disabled
 ktlint_standard_multiline-expression-wrapping = disabled
 ktlint_standard_expression-operand-wrapping = disabled
 ktlint_standard_chain-method-continuation = disabled
+ktlint_standard_parameter-list-wrapping = disabled
+ktlint_standard_parameter-wrapping = disabled
+ktlint_standard_function-expression-body = disabled
+ktlint_standard_class-signature = disabled
+ktlint_standard_function-signature = disabled
 
 [*.{xml,yml,yaml,md}]
 indent_size = 2
