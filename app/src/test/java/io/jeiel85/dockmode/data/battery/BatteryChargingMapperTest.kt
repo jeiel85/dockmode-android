@@ -21,13 +21,14 @@ class BatteryChargingMapperTest(
     companion object {
         @JvmStatic
         @Parameterized.Parameters(name = "{0} -> {1}")
-        fun cases(): List<Array<Any>> = listOf(
-            arrayOf(BatteryManager.BATTERY_STATUS_CHARGING, ChargingState.Charging),
-            arrayOf(BatteryManager.BATTERY_STATUS_FULL, ChargingState.Full),
-            arrayOf(BatteryManager.BATTERY_STATUS_DISCHARGING, ChargingState.Discharging),
-            arrayOf(BatteryManager.BATTERY_STATUS_NOT_CHARGING, ChargingState.Discharging),
-            arrayOf(BatteryManager.BATTERY_STATUS_UNKNOWN, ChargingState.Unknown),
-            arrayOf(-1, ChargingState.Unknown),
-        )
+        fun cases(): List<Array<Any>> =
+            listOf(
+                arrayOf(BatteryManager.BATTERY_STATUS_CHARGING, ChargingState.Charging),
+                arrayOf(BatteryManager.BATTERY_STATUS_FULL, ChargingState.Full),
+                arrayOf(BatteryManager.BATTERY_STATUS_DISCHARGING, ChargingState.Discharging),
+                arrayOf(BatteryManager.BATTERY_STATUS_NOT_CHARGING, ChargingState.Discharging),
+                arrayOf(BatteryManager.BATTERY_STATUS_UNKNOWN, ChargingState.Unknown),
+                arrayOf(-1, ChargingState.Unknown),
+            )
     }
 }
