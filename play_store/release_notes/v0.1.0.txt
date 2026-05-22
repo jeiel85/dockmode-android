@@ -1,0 +1,7 @@
+<ko-KR>
+DockMode 초기 설계 문서 버전입니다. Android 충전 거치대용 시계·달력 대시보드 앱 구현 계획을 정리했습니다.
+</ko-KR>
+
+<en-US>
+Initial design document version for DockMode, an Android dock clock and calendar dashboard app.
+</en-US>

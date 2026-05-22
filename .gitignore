@@ -1,0 +1,55 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/**/build/
+
+# Android
+local.properties
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+out/
+release/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Signing & secrets
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+google-services.json
+
+# Android Studio / IntelliJ
+*.iml
+.idea/
+.navigation/
+
+# Kotlin
+.kotlin/
+
+# Logs & profiling
+*.log
+*.hprof
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+
+# Build artifacts (released bundle outputs)
+dockmode-*.zip
+mapping.txt
