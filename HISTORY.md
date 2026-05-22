@@ -2,6 +2,25 @@
 
 ## 2026-05-22
 
+- 작업: 새 버전 만들기 절차 정비. `nightseed-survivor` 저장소의 태그 트리거 자동 Release 패턴을 DockMode에 적용.
+- 변경 사항:
+  - `.github/workflows/android-ci.yml`에 `permissions: contents: write`, `Collect release artifacts`(태그 이름 기반 산출물 정규화), `Resolve release notes`(`docs/releases/<tag>.md` 우선), `softprops/action-gh-release@v2`(태그 푸시 시 Release 생성·갱신) 단계 추가.
+  - upload-artifact 단계가 정규화된 파일명을 가리키도록 경로 갱신 (`release-assets/dockmode-*-...`).
+  - `docs/releases/README.md` 신규: 형식 가이드와 태그 푸시 흐름 정의.
+  - `play_store/release_notes/README.md` 신규: BCP-47 언어 태그 형식, Play Console 업로드 절차 정의.
+  - `docs/releases/v0.1.0.md`를 실제 v0.1 구현 기준으로 재작성 (가로 대기 화면, DreamService, 시계 스타일 3종, 검증, 알려진 제약, 다운로드 섹션).
+  - `play_store/release_notes/v0.1.0.txt`를 한국어/영어 BCP-47 블록과 500자 이하 본문으로 재작성.
+  - `RELEASE.md`를 태그 트리거 자동화 기준으로 전면 갱신 (산출물 파일명 표, 새 버전 만들기 절차, GitHub Release 확인 명령, 롤백 절차).
+- 검증:
+  - 워크플로 변경 후 main 푸시로 일반 빌드 단계가 그대로 동작하는지 CI에서 확인. 태그 트리거는 실제 태그 푸시 전까지 dry-run 불가 → 실제 푸시 시점에 재확인 필요.
+  - `docs/releases/v0.1.0.md` 본문은 v0.1 실제 구현 항목 기준이므로 후속 변경 발생 시 함께 갱신.
+- 결과: 절차 정비 완료. v0.1.0 태그 실제 푸시는 사용자 확인 후 진행.
+- 후속 작업:
+  - 사용자 승인 후 `git tag -a v0.1.0 -m "DockMode v0.1.0" && git push origin v0.1.0`으로 첫 자동 Release 생성 확인.
+  - 릴리즈 키스토어 구성과 서명된 AAB 생성 절차 정리.
+
+## 2026-05-22
+
 - 작업: GOALS.md Goal 1+2+3 통합 구현. DockMode Android 앱의 Gradle 골격, MainActivity/HomeScreen, StandbyActivity, StandbyDreamService, 캘린더 권한 UX, 번인 방지, 다크 테마, 단위 테스트, ktlint/detekt 설정 일괄 추가.
 - 적용 식별값:
   - Gradle namespace/applicationId: `io.jeiel85.dockmode`

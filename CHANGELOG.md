@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Build / CI
+- 태그 푸시(`v*.*.*`) 시 GitHub Release를 자동 생성·갱신하고 Debug APK / Release AAB / R8 mapping을 첨부하도록 `Android CI` 워크플로 확장
+- 산출물 파일명을 `dockmode-vX.Y.Z-debug.apk`, `dockmode-vX.Y.Z-release.aab`, `dockmode-vX.Y.Z-mapping.txt`로 정규화
+- 워크플로에 `permissions: contents: write` 추가하여 `softprops/action-gh-release@v2`가 Release를 만들 수 있도록 권한 부여
+
+### Documentation
+- `docs/releases/README.md`, `play_store/release_notes/README.md` 신규 추가로 새 버전 만들기 절차와 형식 가이드 정의
+- `docs/releases/v0.1.0.md`, `play_store/release_notes/v0.1.0.txt`를 실제 v0.1 구현 기준으로 재작성
+- `RELEASE.md`를 태그 트리거 자동화 기준으로 전면 갱신 (산출물 파일명 표, 새 버전 만들기 절차, 롤백 절차 추가)
+
 ### Added
 - Kotlin + Jetpack Compose + Gradle Kotlin DSL 기반 Android 앱 골격 구성 (`namespace`/`applicationId` `io.jeiel85.dockmode`, minSdk 26, compileSdk 35)
 - `MainActivity` HomeScreen: 앱 소개, 충전 상태 카드, 대기 화면 시작, 캘린더 권한 카드, 스크린세이버 설정 카드, 설정 진입

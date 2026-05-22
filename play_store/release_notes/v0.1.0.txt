@@ -1,7 +1,30 @@
 <ko-KR>
-DockMode 초기 설계 문서 버전입니다. Android 충전 거치대용 시계·달력 대시보드 앱 구현 계획을 정리했습니다.
-</ko-KR>
+🛏️ v0.1.0 첫 빌드: 가로 대기 화면 + 스크린세이버 모드
 
+새로 추가
+• 가로 전체화면 시계·날짜·요일 대기 화면
+• Android 스크린세이버(DreamService) 모드 — 시스템 설정에서 DockMode 선택
+• 시계 스타일 3종: 미니멀 / 디지털 / 캘린더 중심
+• 충전 상태 표시와 화면 켜짐 유지
+• 오늘 일정·다음 일정 표시 (캘린더 권한은 옵션, 거부해도 시계는 동작)
+• 야간 다크 테마 + OLED 번인 방지 미세 이동
+
+정책
+• 네트워크 권한 없음, 광고/분석/로그인 없음
+• 캘린더 정보는 기기 안에서만 사용
+</ko-KR>
 <en-US>
-Initial design document version for DockMode, an Android dock clock and calendar dashboard app.
+🛏️ v0.1.0 first build: landscape standby + screen saver mode
+
+What's new
+• Full-screen landscape clock, date, and weekday standby
+• Android screen saver (DreamService) mode — pick DockMode in system settings
+• Three clock styles: Minimal / Digital / Calendar focus
+• Charging status indicator with keep-screen-on
+• Today and next event preview (calendar permission optional)
+• Dark night theme with subtle anti burn-in motion
+
+Policies
+• No network permission, no ads, no analytics, no sign-in
+• Calendar data stays on device
 </en-US>
