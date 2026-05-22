@@ -1,0 +1,31 @@
+title: DockMode
+description: Android 충전 거치대용 시계와 일정 대시보드 앱
+theme: jekyll-theme-cayman
+show_downloads: false
+
+repository: jeiel85/dockmode-android
+github:
+  repository_url: https://github.com/jeiel85/dockmode-android
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+exclude:
+  - README.md
+  - CHANGELOG.md
+  - HISTORY.md
+  - DECISIONS.md
+  - TASKS.md
+  - GOALS.md
+  - AGENTS.md
+  - RELEASE.md
+  - PRIVACY.md
+  - PROJECT_ID.md
+  - SPEC.md
+  - TECH_SPEC.md
+  - BUNDLE_MANIFEST.md
+  - GEMINI.md
+  - CLAUDE.md
