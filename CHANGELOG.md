@@ -1,5 +1,16 @@
 # CHANGELOG.md
 
+## v0.1.1 - 2026-05-23
+
+DockMode 첫 Play Store 출시용 signed 빌드. 코드/디자인 동일, versionCode/서명만 변경. 자세한 본문: [docs/releases/v0.1.1.md](docs/releases/v0.1.1.md).
+
+### Build / CI
+- `versionCode` 1 → 2, `versionName` 0.1.0 → 0.1.1
+- GitHub Actions Secrets(`DOCKMODE_KEYSTORE_BASE64` 외 3종)로 등록된 업로드 키스토어로 release AAB 자동 서명. v0.1.0의 unsigned AAB를 대체하는 첫 signed 산출물.
+
+### Documentation
+- `play_store/release_notes/v0.1.1.txt`, `docs/releases/v0.1.1.md` 추가
+
 ## v0.1.0 - 2026-05-22
 
 DockMode 첫 동작 빌드 릴리즈. 자세한 본문은 [docs/releases/v0.1.0.md](docs/releases/v0.1.0.md) 또는 [GitHub Release](https://github.com/jeiel85/dockmode-android/releases/tag/v0.1.0) 참고.

@@ -1,0 +1,16 @@
+<ko-KR>
+첫 Play Store 출시 빌드입니다.
+
+· Android 충전 거치대용 가로 시계와 캘린더 대시보드
+· 시계 스타일 3종 (미니멀 / 디지털 / 캘린더 중심)
+· OLED 번인 방지, 야간 저휘도 모드, 화면 켜짐 유지
+· 캘린더 권한은 선택 사항이며, 데이터는 외부로 전송되지 않습니다.
+</ko-KR>
+<en-US>
+First Play Store release.
+
+· Landscape clock & calendar dashboard for docked Android phones
+· Three clock styles (Minimal / Digital / Calendar focus)
+· OLED burn-in guard, night low-brightness, keep-screen-on
+· Calendar permission is optional. Calendar data never leaves your device.
+</en-US>
