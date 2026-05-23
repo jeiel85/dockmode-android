@@ -22,6 +22,8 @@ captures/
 # Signing & secrets
 *.jks
 *.keystore
+.keystore
+.keystore/
 keystore.properties
 signing.properties
 google-services.json
