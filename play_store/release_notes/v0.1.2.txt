@@ -1,0 +1,12 @@
+<ko-KR>
+설정 화면 개선 빌드입니다.
+
+· 시계 스타일 선택 카드의 미리보기를 현재 시각 기반으로 매초 갱신하도록 변경 (정적 "12:00" 텍스트 제거)
+· 미니멀 HH:mm, 디지털 HH:mm:ss, 캘린더 중심 HH:mm · 일정 형식으로 실제 시각 표시
+</ko-KR>
+<en-US>
+Settings screen polish.
+
+· Clock style selector card previews now show the current time, updated every second (replacing the static "12:00" sample text)
+· Minimal HH:mm, Digital HH:mm:ss, Calendar focus HH:mm · Events
+</en-US>

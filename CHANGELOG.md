@@ -1,5 +1,22 @@
 # CHANGELOG.md
 
+## v0.1.2 - 2026-05-23
+
+설정 화면 시계 스타일 카드의 정적 미리보기 텍스트를 실제 현재 시각 기반 동적 표시로 교체. 자세한 본문: [docs/releases/v0.1.2.md](docs/releases/v0.1.2.md).
+
+### Changed
+- `SettingsScreen.ClockStyleSelectorSection`이 `produceState`로 매초 갱신되는 `nowMillis`를 받아 세 카드의 미리보기를 동적으로 표시. 정적 텍스트(`"12:00"`, `"12:00:30"`, `"12 / 일정"`) 제거.
+- 미니멀 = `HH:mm`, 디지털 = `HH:mm:ss`, 캘린더 중심 = `HH:mm · 일정` (locale별 suffix)
+
+### Added
+- `settings_clock_style_calendar_preview_suffix` 문자열 (ko=`일정`, en=`Events`)
+
+### Build / CI
+- `versionCode` 2 → 3, `versionName` 0.1.1 → 0.1.2
+
+### Documentation
+- `play_store/release_notes/v0.1.2.txt`, `docs/releases/v0.1.2.md` 추가
+
 ## v0.1.1 - 2026-05-23
 
 DockMode 첫 Play Store 출시용 signed 빌드. 코드/디자인 동일, versionCode/서명만 변경. 자세한 본문: [docs/releases/v0.1.1.md](docs/releases/v0.1.1.md).

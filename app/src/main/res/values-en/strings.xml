@@ -43,6 +43,7 @@
     <string name="settings_clock_style_minimal">Minimal</string>
     <string name="settings_clock_style_digital">Digital</string>
     <string name="settings_clock_style_calendar">Calendar focus</string>
+    <string name="settings_clock_style_calendar_preview_suffix">Events</string>
     <string name="settings_show_calendar">Show calendar</string>
     <string name="settings_show_calendar_desc">Show calendar events alongside the standby clock.</string>
     <string name="settings_night_mode">Night low-brightness mode</string>

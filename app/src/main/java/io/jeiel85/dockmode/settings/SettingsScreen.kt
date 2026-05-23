@@ -35,9 +35,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -49,6 +52,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import io.jeiel85.dockmode.AppContainer
 import io.jeiel85.dockmode.R
 import io.jeiel85.dockmode.domain.model.ClockStyle
+import kotlinx.coroutines.delay
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -140,6 +147,19 @@ private fun ClockStyleSelectorSection(
     selectedStyle: ClockStyle,
     onSelectStyle: (ClockStyle) -> Unit,
 ) {
+    val configuration = LocalConfiguration.current
+    val locale: Locale = configuration.locales.get(0) ?: Locale.getDefault()
+    val hmFormatter = remember(locale) { SimpleDateFormat("HH:mm", locale) }
+    val hmsFormatter = remember(locale) { SimpleDateFormat("HH:mm:ss", locale) }
+    val nowMillis by produceState(initialValue = System.currentTimeMillis(), locale) {
+        while (true) {
+            value = System.currentTimeMillis()
+            delay(1_000L)
+        }
+    }
+    val now = Date(nowMillis)
+    val calendarPreviewLabel = stringResource(id = R.string.settings_clock_style_calendar_preview_suffix)
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(14.dp),
@@ -156,7 +176,7 @@ private fun ClockStyleSelectorSection(
         ) {
             ClockStyleCard(
                 title = stringResource(id = R.string.settings_clock_style_minimal),
-                previewText = "12:00",
+                previewText = hmFormatter.format(now),
                 isSelected = selectedStyle == ClockStyle.Minimal,
                 modifier = Modifier
                     .weight(1f)
@@ -166,7 +186,7 @@ private fun ClockStyleSelectorSection(
 
             ClockStyleCard(
                 title = stringResource(id = R.string.settings_clock_style_digital),
-                previewText = "12:00:30",
+                previewText = hmsFormatter.format(now),
                 isSelected = selectedStyle == ClockStyle.Digital,
                 modifier = Modifier
                     .weight(1f)
@@ -176,7 +196,7 @@ private fun ClockStyleSelectorSection(
 
             ClockStyleCard(
                 title = stringResource(id = R.string.settings_clock_style_calendar),
-                previewText = "12 / 일정",
+                previewText = "${hmFormatter.format(now)} · $calendarPreviewLabel",
                 isSelected = selectedStyle == ClockStyle.CalendarFocus,
                 modifier = Modifier
                     .weight(1f)

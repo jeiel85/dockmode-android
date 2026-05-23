@@ -43,6 +43,7 @@
     <string name="settings_clock_style_minimal">미니멀</string>
     <string name="settings_clock_style_digital">디지털</string>
     <string name="settings_clock_style_calendar">캘린더 중심</string>
+    <string name="settings_clock_style_calendar_preview_suffix">일정</string>
     <string name="settings_show_calendar">일정 표시</string>
     <string name="settings_show_calendar_desc">대기 화면에 일정 정보를 함께 표시합니다.</string>
     <string name="settings_night_mode">야간 저휘도 모드</string>
