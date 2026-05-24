@@ -1,5 +1,29 @@
 # HISTORY.md
 
+## 2026-05-24 (GitHub IO 랜딩 페이지와 README 정비)
+
+- 작업: GitHub Pages 랜딩 페이지를 앱 정체성이 드러나는 제품 소개 페이지로 개편하고, README 첫 화면에서 DockMode의 목적, 화면, Play Store 준비 자료를 바로 확인할 수 있게 재정리.
+- 변경 사항:
+  - 신규: `docs/_layouts/default.html`, `docs/assets/styles.css`, `docs/assets/dockmode-icon-512.png`, `docs/assets/dockmode-feature-graphic.png`
+  - 갱신: `docs/index.md`를 실제 스크린샷, 권한 정책, Play Store 자산 링크가 포함된 랜딩 페이지로 재작성
+  - 갱신: `README.md`를 앱 정체성, 화면 미리보기, 구현 상태, Play Store 준비 자료 중심으로 재구성
+  - 갱신: `TASKS.md`, `CHANGELOG.md`에 이번 문서/랜딩 작업 기록
+- GitHub 설정:
+  - Pages: `main` 브랜치 `/docs`, URL `https://jeiel85.github.io/dockmode-android/`, HTTPS enforced 상태 확인
+  - 저장소 description/homepage/topics가 DockMode 랜딩과 일치하는지 확인
+- 개인정보 처리방침:
+  - 기존 `docs/privacy.md`와 `PRIVACY.md`가 존재하고 공개 URL이 설정되어 있어 새로 만들지 않고 유지
+- Play Store 그래픽:
+  - 기존 `play_store/graphics/app-icon-512.png`, `feature-graphic-1024x500.png`와 `play_store/screenshots/`가 존재해 재제작하지 않고 랜딩/README에서 노출
+- 검증:
+  - GitHub Pages 설정 확인: `status=built`, `source=main /docs`, `https_enforced=true`
+  - 저장소 description/homepage/topics를 `gh repo edit`로 재확인 및 동일 값 적용
+  - Play Store 그래픽과 Pages용 사본 크기 확인: 앱 아이콘 512×512, 피처 그래픽 1024×500, 32-bit PNG
+  - 로컬에 Ruby/Bundler가 없어 Jekyll 빌드는 실행하지 못함. Pages 렌더링은 push 후 GitHub Pages 빌드 결과로 확인 필요.
+- 결과: GitHub IO 랜딩/README/스토어 준비 자료 노출 정비 완료.
+- 후속 작업:
+  - Play Console 업로드 시 스크린샷 비율 거부가 발생하면 `play_store/screenshots/README.md` 기준으로 2:1 패딩본 추가 생성.
+
 ## 2026-05-23 (Play Store 그래픽 자산 제작)
 
 - 작업: Play Console 기본 등록정보에 필요한 정식 앱 아이콘 512×512 PNG와 피처 그래픽 1024×500 PNG를 제작하고, 임시 런처 아이콘 벡터를 같은 모티프로 동기화.

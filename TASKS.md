@@ -103,6 +103,8 @@
 - [x] Play Console 등록용 자료 일괄 작성 (`play_store/listing/` + `play_store/onboarding-checklist.md`)
 - [x] 키스토어/Play App Signing 가이드 + 환경변수 기반 자동 서명 인프라 (`docs/keystore-guide.md`)
 - [x] DockMode 상표·중복명 사전 리서치 (`docs/branding-research.md`)
+- [x] GitHub IO 랜딩 페이지 제품 소개형 개편 (`docs/index.md`, `docs/assets/`)
+- [x] README 앱 정체성/스토어 준비 자료 중심 정리
 - [ ] (사용자) USPTO TSDR / KIPRIS / EUIPO / J-PlatPat 직접 조회로 상표 충돌 최종 확인
 - [ ] (사용자) Play Developer 계정 등록 ($25) + Play Console에서 DockMode 앱 생성 + Play App Signing 옵트인
 - [ ] (사용자) 업로드 키스토어 생성 + GitHub Actions Secrets 4종 등록

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if page.title %}{{ page.title }} · {% endif %}DockMode</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}DockMode{% endif %}">
+    <meta property="og:description" content="{{ page.description | default: site.description }}">
+    <meta property="og:image" content="{{ '/assets/dockmode-feature-graphic.png' | relative_url }}">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="{{ '/assets/dockmode-icon-512.png' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/styles.css' | relative_url }}">
+  </head>
+  <body>
+    <main>
+      {% if page.url == "/" %}
+        {{ content }}
+      {% else %}
+        <article class="markdown-page">
+          {{ content }}
+        </article>
+      {% endif %}
+    </main>
+  </body>
+</html>

@@ -1,5 +1,15 @@
 # CHANGELOG.md
 
+## Unreleased
+
+### Documentation
+- GitHub Pages 랜딩 페이지를 실제 앱 스크린샷, 권한 정책, Play Store 준비 자산을 보여 주는 제품 소개형 페이지로 개편
+- README를 앱 정체성, 화면 미리보기, 현재 구현 상태, Play Store 등록 자료 경로 중심으로 재구성
+- Pages용 Open Graph 이미지와 favicon으로 `play_store/graphics/`의 앱 아이콘/피처 그래픽 사본을 추가
+
+### Verification
+- GitHub Pages 설정(`main` 브랜치 `/docs`, HTTPS enforced), 저장소 description/homepage/topics 확인
+
 ## v0.1.2 - 2026-05-23
 
 설정 화면 시계 스타일 카드의 정적 미리보기 텍스트를 실제 현재 시각 기반 동적 표시로 교체. 자세한 본문: [docs/releases/v0.1.2.md](docs/releases/v0.1.2.md).
@@ -52,7 +62,7 @@ DockMode 첫 동작 빌드 릴리즈. 자세한 본문은 [docs/releases/v0.1.0.
 - 앱명 `DockMode` 상표/중복 검토 미완료.
 - 정식 앱 아이콘 디자인 미완료.
 
-## Unreleased
+## Earlier Unreleased Work
 
 ### Added
 - Play Store 그래픽 자산 추가
