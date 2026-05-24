@@ -9,6 +9,7 @@
 
 ### Verification
 - GitHub Pages 설정(`main` 브랜치 `/docs`, HTTPS enforced), 저장소 description/homepage/topics 확인
+- GitHub Actions Android CI와 pages-build-deployment 성공 확인, 공개 랜딩/개인정보 URL HTTP 200 확인
 
 ## v0.1.2 - 2026-05-23
 

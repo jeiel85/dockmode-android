@@ -19,7 +19,9 @@
   - GitHub Pages 설정 확인: `status=built`, `source=main /docs`, `https_enforced=true`
   - 저장소 description/homepage/topics를 `gh repo edit`로 재확인 및 동일 값 적용
   - Play Store 그래픽과 Pages용 사본 크기 확인: 앱 아이콘 512×512, 피처 그래픽 1024×500, 32-bit PNG
-  - 로컬에 Ruby/Bundler가 없어 Jekyll 빌드는 실행하지 못함. Pages 렌더링은 push 후 GitHub Pages 빌드 결과로 확인 필요.
+  - GitHub Actions: Android CI run `26364619720` 성공, pages-build-deployment run `26364619108` 성공
+  - 공개 URL 확인: `https://jeiel85.github.io/dockmode-android/` HTTP 200, `https://jeiel85.github.io/dockmode-android/privacy/` HTTP 200
+  - 로컬에 Ruby/Bundler와 Playwright/Chrome이 없어 로컬 Jekyll 빌드와 브라우저 픽셀 렌더링은 실행하지 못함. GitHub Pages 원격 빌드와 공개 URL 응답으로 대체 확인.
 - 결과: GitHub IO 랜딩/README/스토어 준비 자료 노출 정비 완료.
 - 후속 작업:
   - Play Console 업로드 시 스크린샷 비율 거부가 발생하면 `play_store/screenshots/README.md` 기준으로 2:1 패딩본 추가 생성.
