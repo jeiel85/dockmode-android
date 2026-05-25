@@ -1,5 +1,27 @@
 # HISTORY.md
 
+## 2026-05-25 (대기모드 디자인 프리셋 및 테마 추가 개발)
+
+- 작업: DockMode 대기화면에 8가지의 다양한 시각 프리셋(Minimal, Digital, CalendarFocus, WarmBedside, OledNight, SplitDashboard, BatteryDock, PhotoFrame)과 6가지 테마(Midnight Glass, Warm Bedside, OLED Pure Black, Aurora Gradient, Paper Calendar, Material You)를 제공하는 확장 개발을 성공적으로 완수함.
+- 주요 변경 사항:
+  - 신규: `domain/model/StandbyThemePreset.kt`, `domain/model/StandbyWidgetType.kt`
+  - 신규: `standby/theme/StandbyThemeRegistry.kt`, `standby/widgets/StandbyWidgets.kt`, `standby/presets/StandbyPresetLayouts.kt`
+  - 갱신: `domain/model/ClockStyle.kt` (enum에 abstract 메서드 도입을 통해 Cyclomatic Complexity 문제 완전 해결)
+  - 갱신: `domain/model/DockModeSettings.kt`, `data/settings/SettingsRepository.kt` (테마 설정 영구 저장 및 앱 재시작 시 상태 복원 지원)
+  - 갱신: `standby/StandbyUiState.kt`, `standby/StandbyViewModel.kt`, `standby/StandbyRoute.kt`
+  - 갱신: `standby/StandbyScreen.kt` (좌우 스와이프 제스처를 통한 프리셋 전환 기능 및 OLED 저휘도 번인 미세 오프셋 보완)
+  - 갱신: `settings/SettingsViewModel.kt`, `settings/SettingsScreen.kt` (8종 프리셋과 6종 테마를 가로 스크롤 LazyRow를 통해 유려하고 아름답게 선택할 수 있도록 리디자인)
+  - 갱신: `SPEC.md`, `TECH_SPEC.md`, `DECISIONS.md`, `TASKS.md`, `CHANGELOG.md`
+- 검증:
+  - 로컬 단위 테스트: `./gradlew testDebugUnitTest` 100% 성공
+  - 로컬 정적 분석 및 린트: `./gradlew ktlintCheck detekt` 100% 성공 (ktlintFormat을 활용하여 trailing comma 등 완벽 교정, enum 리팩토링으로 detekt Cyclomatic Complex Method 완전 정복)
+  - 로컬 디버그 빌드: `./gradlew assembleDebug` 100% 성공 (debug APK 생성 완료)
+- 결과: 대기모드 디자인 프리셋 및 테마 추가 개발 완료. 사용자는 대기화면에서 좌우로 쓸어 넘겨 시계 스타일을 빠르게 바꾸거나 설정 화면에서 프리셋/테마를 편하게 제어할 수 있게 됨.
+- 후속 작업:
+  - 사진 프레임 실제 로컬 갤러리/Google Photo 연동
+  - 외부 Weather API 연동
+  - 픽셀/레트로/닉시관 등 추가 디자인 테마 확장
+
 ## 2026-05-24 (GitHub IO 랜딩 페이지와 README 정비)
 
 - 작업: GitHub Pages 랜딩 페이지를 앱 정체성이 드러나는 제품 소개 페이지로 개편하고, README 첫 화면에서 DockMode의 목적, 화면, Play Store 준비 자료를 바로 확인할 수 있게 재정리.

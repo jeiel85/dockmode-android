@@ -13,5 +13,9 @@ fun StandbyRoute(
 ) {
     val viewModel: StandbyViewModel = viewModel(factory = StandbyViewModel.Factory(appContainer))
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    StandbyScreen(state = state)
+    StandbyScreen(
+        state = state,
+        onClockStyleChanged = viewModel::setClockStyle,
+        onThemeChanged = viewModel::setSelectedThemeId,
+    )
 }

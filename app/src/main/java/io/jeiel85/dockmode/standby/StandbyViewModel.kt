@@ -8,6 +8,7 @@ import io.jeiel85.dockmode.data.battery.BatteryStateRepository
 import io.jeiel85.dockmode.data.calendar.CalendarRepository
 import io.jeiel85.dockmode.data.settings.SettingsRepository
 import io.jeiel85.dockmode.domain.model.CalendarPermissionState
+import io.jeiel85.dockmode.domain.model.ClockStyle
 import io.jeiel85.dockmode.util.CalendarFilters
 import io.jeiel85.dockmode.util.TickerFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,12 +40,25 @@ class StandbyViewModel(
                 nowMillis = now,
                 chargingState = charging,
                 clockStyle = settings.clockStyle,
+                selectedThemeId = settings.selectedThemeId,
                 showCalendar = settings.showCalendar,
                 burnInGuard = settings.burnInGuard,
             )
         }.launchIn(viewModelScope)
 
         refreshCalendar()
+    }
+
+    fun setClockStyle(style: ClockStyle) {
+        viewModelScope.launch {
+            settingsRepository.setClockStyle(style)
+        }
+    }
+
+    fun setSelectedThemeId(themeId: String) {
+        viewModelScope.launch {
+            settingsRepository.setSelectedThemeId(themeId)
+        }
     }
 
     fun refreshCalendar() {

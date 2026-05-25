@@ -194,3 +194,26 @@ v1.0까지는 Google Calendar REST API를 사용하지 않고 Android Calendar P
 - 시안의 `MainActivity.NavHost` 패턴은 채택하여 향후 화면 추가 시 라우팅이 용이하다.
 - 시안의 라이트 모드 컬러 스킴도 함께 가져오지만, 기본값은 다크 모드를 유지하여 베드사이드 UX를 보전한다.
 - 시안에 의도된 야간 호박색(Amber) 톤은 미니멀 시계 스타일에서만 활성화되어 OLED 번인·눈부심 방지 정책과 조화롭게 동작한다.
+
+---
+
+## ADR-010: 코드 기반 대기모드 디자인 프리셋 및 테마 연동과 제스처 스와이프 기능 채택
+
+날짜: 2026-05-25
+
+### 결정
+
+- 대기화면에 8종의 다양한 프리셋(Minimal, Digital, CalendarFocus, WarmBedside, OledNight, SplitDashboard, BatteryDock, PhotoFrame)과 6종의 프리미엄 테마를 코드 기반(Compose Canvas, Brush 등)으로 구축한다.
+- StandbyScreen에서 좌우 스와이프 제스처(`detectHorizontalDragGestures`)로 시계 스타일(ClockStyle)을 실시간 전환할 수 있게 구현한다.
+- `ClockStyle` enum 내에 abstract 메서드(`getTitle`, `getPreview`)를 직접 정의하여 다형성으로 분기 처리를 객체 지향화하고 detekt 규정인 Cyclomatic Complexity(복잡도 15 미만) 제약을 완벽히 준수한다.
+
+### 이유
+
+- 사용자가 거치대 충전 상황에 어울리는 최적의 대기화면 디자인을 다양하게 즐길 수 있게 한다.
+- 스와이프 제스처는 물리 버튼을 누르지 않아도 직관적이고 아름답게 스타일을 바꿀 수 있는 프리미엄 Ambient UX를 보장한다.
+- 뷰 구조의 when-expression 복잡도를 Kotlin 다형성 패턴을 사용해 Enum 내부에 정적으로 쪼개어 배치함으로써, 코드 품질과 린트(detekt) 기준을 동시에 만족할 수 있었다.
+
+### 영향
+
+- 마지막으로 선택된 시계 프리셋 및 테마 아이디는 DataStore 설정 저장소에 실시간 저장되어 앱을 재시작해도 온전히 복원된다.
+- 설정 화면의 UI도 LazyRow 기반 가로 스크롤 카드 레이아웃으로 개편하여 공간을 적게 차지하면서도 깔끔한 조작계를 제공한다.

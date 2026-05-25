@@ -184,7 +184,7 @@ enum class ChargingState {
 역할:
 
 - DataStore Preferences로 사용자 설정 저장
-- 시계 스타일, 일정 표시 여부, 야간 모드, 번인 방지, 화면 유지 설정 관리
+- 시계 스타일, 테마 스타일, 일정 표시 여부, 야간 모드, 번인 방지, 화면 유지 설정 관리
 
 ## 6. Manifest 설계
 
@@ -228,15 +228,17 @@ enum class ChargingState {
 
 ```kotlin
 data class StandbyUiState(
-    val currentTimeText: String,
-    val currentDateText: String,
-    val chargingState: ChargingState,
-    val calendarPermissionState: CalendarPermissionState,
-    val nextEvent: CalendarEventSummary?,
-    val todayEvents: List<CalendarEventSummary>,
-    val clockStyle: ClockStyle,
-    val nightMode: Boolean,
-    val burnInOffset: IntOffset
+    val nowMillis: Long = System.currentTimeMillis(),
+    val chargingState: ChargingState = ChargingState.Unknown,
+    val clockStyle: ClockStyle = ClockStyle.Minimal,
+    val selectedThemeId: String = "midnight_glass",
+    val showCalendar: Boolean = true,
+    val burnInGuard: Boolean = true,
+    val calendarPermissionState: CalendarPermissionState = CalendarPermissionState.Unknown,
+    val nextEvent: CalendarEventSummary? = null,
+    val todayEvents: List<CalendarEventSummary> = emptyList(),
+    val calendarLoadFailed: Boolean = false,
+    val isLoadingEvents: Boolean = false,
 )
 ```
 

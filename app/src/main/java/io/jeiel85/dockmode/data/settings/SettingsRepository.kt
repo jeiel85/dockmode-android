@@ -17,6 +17,7 @@ private val Context.dockModeDataStore: DataStore<Preferences> by preferencesData
 class SettingsRepository(private val context: Context) {
     private object Keys {
         val ClockStyleKey = stringPreferencesKey("clock_style")
+        val SelectedThemeIdKey = stringPreferencesKey("selected_theme_id")
         val ShowCalendar = booleanPreferencesKey("show_calendar")
         val NightMode = booleanPreferencesKey("night_mode")
         val BurnInGuard = booleanPreferencesKey("burn_in_guard")
@@ -26,6 +27,7 @@ class SettingsRepository(private val context: Context) {
     val settings: Flow<DockModeSettings> = context.dockModeDataStore.data.map { prefs ->
         DockModeSettings(
             clockStyle = prefs[Keys.ClockStyleKey]?.toClockStyle() ?: ClockStyle.Minimal,
+            selectedThemeId = prefs[Keys.SelectedThemeIdKey] ?: "midnight_glass",
             showCalendar = prefs[Keys.ShowCalendar] ?: true,
             nightMode = prefs[Keys.NightMode] ?: true,
             burnInGuard = prefs[Keys.BurnInGuard] ?: true,
@@ -35,6 +37,10 @@ class SettingsRepository(private val context: Context) {
 
     suspend fun setClockStyle(style: ClockStyle) {
         context.dockModeDataStore.edit { it[Keys.ClockStyleKey] = style.name }
+    }
+
+    suspend fun setSelectedThemeId(themeId: String) {
+        context.dockModeDataStore.edit { it[Keys.SelectedThemeIdKey] = themeId }
     }
 
     suspend fun setShowCalendar(enabled: Boolean) {

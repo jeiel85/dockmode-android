@@ -2,6 +2,7 @@ package io.jeiel85.dockmode.settings
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,7 +15,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -52,6 +56,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import io.jeiel85.dockmode.AppContainer
 import io.jeiel85.dockmode.R
 import io.jeiel85.dockmode.domain.model.ClockStyle
+import io.jeiel85.dockmode.standby.theme.StandbyThemeRegistry
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -121,6 +126,16 @@ fun SettingsScreen(
                 thickness = 1.dp,
             )
 
+            ThemeSelectorSection(
+                selectedThemeId = settings.selectedThemeId,
+                onSelectTheme = viewModel::setThemeId,
+            )
+
+            HorizontalDivider(
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                thickness = 1.dp,
+            )
+
             PreferencesSection(
                 showCalendar = settings.showCalendar,
                 onShowCalendarChanged = viewModel::setShowCalendar,
@@ -158,7 +173,9 @@ private fun ClockStyleSelectorSection(
         }
     }
     val now = Date(nowMillis)
-    val calendarPreviewLabel = stringResource(id = R.string.settings_clock_style_calendar_preview_suffix)
+    val isKo = locale.language == "ko"
+
+    val styles = ClockStyle.values()
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -170,39 +187,110 @@ private fun ClockStyleSelectorSection(
             color = MaterialTheme.colorScheme.onBackground,
         )
 
-        Row(
+        LazyRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            ClockStyleCard(
-                title = stringResource(id = R.string.settings_clock_style_minimal),
-                previewText = hmFormatter.format(now),
-                isSelected = selectedStyle == ClockStyle.Minimal,
-                modifier = Modifier
-                    .weight(1f)
-                    .testTag("clock_style_minimal_card"),
-                onClick = { onSelectStyle(ClockStyle.Minimal) },
-            )
+            items(styles) { style ->
+                val timeHm = hmFormatter.format(now)
+                val timeHms = hmsFormatter.format(now)
+                val title = style.getTitle(isKo)
+                val preview = style.getPreview(timeHm, timeHms)
 
-            ClockStyleCard(
-                title = stringResource(id = R.string.settings_clock_style_digital),
-                previewText = hmsFormatter.format(now),
-                isSelected = selectedStyle == ClockStyle.Digital,
-                modifier = Modifier
-                    .weight(1f)
-                    .testTag("clock_style_digital_card"),
-                onClick = { onSelectStyle(ClockStyle.Digital) },
-            )
+                ClockStyleCard(
+                    title = title,
+                    previewText = preview,
+                    isSelected = selectedStyle == style,
+                    modifier = Modifier
+                        .width(160.dp)
+                        .testTag("clock_style_${style.name.lowercase()}_card"),
+                    onClick = { onSelectStyle(style) },
+                )
+            }
+        }
+    }
+}
 
-            ClockStyleCard(
-                title = stringResource(id = R.string.settings_clock_style_calendar),
-                previewText = "${hmFormatter.format(now)} · $calendarPreviewLabel",
-                isSelected = selectedStyle == ClockStyle.CalendarFocus,
-                modifier = Modifier
-                    .weight(1f)
-                    .testTag("clock_style_calendar_card"),
-                onClick = { onSelectStyle(ClockStyle.CalendarFocus) },
-            )
+@Composable
+private fun ThemeSelectorSection(
+    selectedThemeId: String,
+    onSelectTheme: (String) -> Unit,
+) {
+    val configuration = LocalConfiguration.current
+    val locale: Locale = configuration.locales.get(0) ?: Locale.getDefault()
+    val isKo = locale.language == "ko"
+
+    val themes = StandbyThemeRegistry.themes
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        Text(
+            text = if (isKo) "대기모드 테마" else "Standby Theme",
+            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+            color = MaterialTheme.colorScheme.onBackground,
+        )
+
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            items(themes) { theme ->
+                val title = if (isKo) theme.displayNameKo else theme.displayNameEn
+                val borderColor = if (selectedThemeId == theme.id) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
+                }
+                val containerColor = if (selectedThemeId == theme.id) {
+                    MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
+                } else {
+                    MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
+                }
+
+                Card(
+                    modifier = Modifier
+                        .width(140.dp)
+                        .height(90.dp)
+                        .clip(RoundedCornerShape(14.dp))
+                        .clickable { onSelectTheme(theme.id) }
+                        .testTag("theme_card_${theme.id}"),
+                    shape = RoundedCornerShape(14.dp),
+                    colors = CardDefaults.cardColors(containerColor = containerColor),
+                    border = BorderStroke(1.5.dp, borderColor),
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(12.dp)
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.SpaceBetween,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        // Colored Circle representing theme color
+                        Box(
+                            modifier = Modifier
+                                .size(28.dp)
+                                .clip(CircleShape)
+                                .background(theme.backgroundColor)
+                                .border(1.dp, theme.textColor.copy(alpha = 0.2f), CircleShape),
+                        )
+
+                        Text(
+                            text = title,
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 12.sp,
+                            ),
+                            color = if (selectedThemeId == theme.id) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.onBackground
+                            },
+                        )
+                    }
+                }
+            }
         }
     }
 }

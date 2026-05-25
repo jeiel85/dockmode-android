@@ -21,6 +21,8 @@ class SettingsViewModel(
 
     fun setClockStyle(style: ClockStyle) = viewModelScope.launch { repository.setClockStyle(style) }
 
+    fun setThemeId(themeId: String) = viewModelScope.launch { repository.setSelectedThemeId(themeId) }
+
     fun setShowCalendar(enabled: Boolean) = viewModelScope.launch { repository.setShowCalendar(enabled) }
 
     fun setNightMode(enabled: Boolean) = viewModelScope.launch { repository.setNightMode(enabled) }

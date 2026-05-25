@@ -11,6 +11,28 @@
 - GitHub Pages 설정(`main` 브랜치 `/docs`, HTTPS enforced), 저장소 description/homepage/topics 확인
 - GitHub Actions Android CI와 pages-build-deployment 성공 확인, 공개 랜딩/개인정보 URL HTTP 200 확인
 
+## v1.1.0 - 2026-05-25
+
+### Added
+- DockMode 대기 화면에 여러 Standby Preset을 선택할 수 있는 구조 추가
+- Minimal Clock, Warm Bedside, OLED Night Clock, Split Dashboard, Calendar Board, Battery Dock, Photo Frame 등 코드 기반 대기모드 프리셋 추가
+- Midnight Glass, Warm Bedside, OLED Pure Black, Aurora Gradient, Paper Calendar, Material You 등 테마 프리셋 추가
+- 선택한 대기모드 프리셋과 테마를 저장하고 복원하는 설정 흐름 추가
+- OLED 야간 시계용 번인 방지 offset 로직 추가
+
+### Changed
+- StandbyActivity 및 StandbyDreamService에서 선택된 프리셋을 기준으로 대기 화면을 렌더링하도록 개선
+- 기존 대기 화면 UI를 프리셋 기반 확장 구조로 정리
+
+### Documentation
+- 대기모드 프리셋, 테마, 위젯 구조 문서 추가 또는 갱신
+- 후속 디자인 확장 작업을 TASKS.md에 기록
+
+### Verification
+- 로컬 단위 테스트 `./gradlew testDebugUnitTest` 100% 통과
+- ktlint/detekt 정적 분석 `./gradlew ktlintCheck detekt` 100% 통과
+- 디버그 빌드 APK 생성 `./gradlew assembleDebug` 성공
+
 ## v0.1.2 - 2026-05-23
 
 설정 화면 시계 스타일 카드의 정적 미리보기 텍스트를 실제 현재 시각 기반 동적 표시로 교체. 자세한 본문: [docs/releases/v0.1.2.md](docs/releases/v0.1.2.md).

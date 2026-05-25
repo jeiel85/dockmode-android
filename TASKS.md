@@ -138,6 +138,24 @@
 - CI: GitHub Actions 동일 단계 통과 (푸시 후 확인)
 - 실기기: 미니멀/디지털/캘린더 포커스 3종 화면이 새 레이아웃대로 표시되고 닫기 버튼이 동작 (후속)
 
+## Milestone 7: 대기모드 디자인 프리셋 추가 개발
+
+- [x] 도메인 모델 설계 (`ClockStyle` 8종 확장, `StandbyThemePreset`, `StandbyWidgetType`)
+- [x] DataStore 테마 설정 저장소 확장 (`SettingsRepository` 내 `selectedThemeIdKey` 추가)
+- [x] Standby UI 상태 및 뷰모델 테마 정보 결합
+- [x] 공용 대기모드 위젯(Time, Date, BatteryCircle, CalendarPreview, PhotoPlaceholder) 구현
+- [x] 8종의 대기모드 프리셋 레이아웃 구현 및 연동
+- [x] 좌우 스와이프 제스처(`detectHorizontalDragGestures`) 기반 실시간 프리셋 전환 기능 추가
+- [x] 설정 화면(SettingsScreen) 가로 스크롤 LazyRow 기반 프리셋 및 테마 리디자인
+- [x] ktlint/detekt 정적 검사 오류 해결 (다형성 리팩토링 적용)
+- [x] 단위 테스트 및 디버그 빌드 검증
+
+완료 기준:
+
+- 로컬 단위 테스트 `./gradlew testDebugUnitTest` 100% 성공
+- ktlint/detekt 정적 분석 `./gradlew ktlintCheck detekt` 100% 성공
+- 디버그 빌드 APK 생성 `./gradlew assembleDebug` 성공
+
 ## 후속 작업 후보
 
 - [ ] 날씨 API 연동 검토: 네트워크 권한과 외부 API 승인 필요

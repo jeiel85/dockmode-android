@@ -9,6 +9,7 @@ data class StandbyUiState(
     val nowMillis: Long = System.currentTimeMillis(),
     val chargingState: ChargingState = ChargingState.Unknown,
     val clockStyle: ClockStyle = ClockStyle.Minimal,
+    val selectedThemeId: String = "midnight_glass",
     val showCalendar: Boolean = true,
     val burnInGuard: Boolean = true,
     val calendarPermissionState: CalendarPermissionState = CalendarPermissionState.Unknown,
