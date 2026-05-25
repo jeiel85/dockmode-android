@@ -1,5 +1,20 @@
 # HISTORY.md
 
+## 2026-05-25 (포토 프레임 플레이스홀더/더미 완벽 제거 및 실 데이터 기반 동적 렌더링 개발)
+
+- 작업: 포토 프레임 모드의 하드코딩된 더미 문자열("임시 플레이스홀더") 및 구조 명칭을 완전히 정리하고, 실제 갤러리 권한 및 이미지 유무 상태를 반영하도록 반응형 실 데이터 구조를 구축함.
+- 주요 변경 사항:
+  - 갱신: `res/values/strings.xml`, `res/values-en/strings.xml` (갤러리 권한 미획득 가이드 및 갤러리 이미지 부재 가이드를 위한 다국어 리소스 추가)
+  - 갱신: `domain/model/StandbyWidgetType.kt` (상수명 `PHOTO_PLACEHOLDER` -> `PHOTO_FRAME`으로 정규화)
+  - 갱신: `standby/widgets/StandbyWidgets.kt` (`PhotoPlaceholderWidget` -> `PhotoFrameEmptyWidget`으로 리팩터링 및 권한 상태에 따른 반응형 UI 구조 이식)
+  - 갱신: `standby/presets/StandbyPresetLayouts.kt` (`PhotoFramePlaceholderPreset` -> `PhotoFramePreset`으로 리팩터링 및 갤러리 권한/슬라이드쇼 상태에 따른 텍스트 레이블 다국어 동적 표시 적용)
+  - 갱신: `standby/StandbyScreen.kt` (변경된 프리셋 `PhotoFramePreset` 호출 매핑 수정)
+- 검증:
+  - 로컬 단위 테스트: `./gradlew testDebugUnitTest` 100% 성공
+  - 정적 린트 및 코드 분석: `./gradlew ktlintCheck detekt` 100% 성공
+  - 디버그 빌드: `./gradlew assembleDebug` 100% 성공
+- 결과: 포토 프레임의 모든 플레이스홀더가 완벽히 제거되었으며, 사용자의 실제 권한 획득과 연동되어 실 데이터 기반의 미려한 UI/UX가 완성됨.
+
 ## 2026-05-25 (로컬 갤러리, 조도 센서 야간 모드 및 태블릿 레이아웃 실연동 개발)
 
 - 작업: 2차 마일스톤 후속 작업(로컬 갤러리 사진 실연동, 조도 센서 기반 자동 야간 모드 튜닝, 태블릿/폴더블 반응형 레이아웃 세밀 튜닝)을 완벽하게 완수함.

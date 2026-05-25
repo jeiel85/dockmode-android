@@ -6,6 +6,6 @@ enum class StandbyWidgetType {
     BATTERY,
     CHARGING_STATE,
     CALENDAR_PREVIEW,
-    PHOTO_PLACEHOLDER,
+    PHOTO_FRAME,
     PRESET_NAME,
 }

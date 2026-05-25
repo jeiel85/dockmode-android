@@ -172,6 +172,20 @@
 - ktlint/detekt 정적 분석 `./gradlew ktlintCheck detekt` 100% 성공
 - 디버그 빌드 APK 생성 `./gradlew assembleDebug` 성공
 
+## Milestone 9: 플레이스홀더 및 더미 완전 제거와 실 데이터 동적 렌더링
+
+- [x] 포토 프레임 모드의 하드코딩된 임시 "Placeholder" 문구 제거 및 권한 상태별 반응형 UI 적용
+- [x] 갤러리 권한 미획득 가이드 및 갤러리 이미지 부재 가이드를 위한 다국어(ko/en) 리소스 추가
+- [x] 모델 및 컴포저블 상수/이름 정규화 (`StandbyWidgetType.PHOTO_FRAME`, `PhotoFramePreset`, `PhotoFrameEmptyWidget`)
+- [x] 포토 프레임 하단 텍스트 정보 레이블의 실시간 상태 매핑 및 다국어 렌더링 도입
+- [x] `./gradlew ktlintCheck detekt testDebugUnitTest assembleDebug` 100% 통과 검증
+
+완료 기준:
+
+- 갤러리 권한 획득 여부와 실제 이미지 보유 여부에 따른 반응형 빈 상태 UI가 정상 노출됨
+- 한국어/영어 문자열 누락 및 하드코딩된 더미 다국어 텍스트 없음
+- 모든 정적 분석, 단위 테스트 및 디버그 빌드 통과 완료
+
 ## 후속 작업 후보
 
 - [ ] 날씨 API 연동 검토: 네트워크 권한과 외부 API 승인 필요

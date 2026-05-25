@@ -355,7 +355,8 @@ fun CalendarPreviewWidget(
 }
 
 @Composable
-fun PhotoPlaceholderWidget(
+fun PhotoFrameEmptyWidget(
+    hasPermission: Boolean,
     theme: StandbyThemePreset,
     modifier: Modifier = Modifier,
 ) {
@@ -368,6 +369,18 @@ fun PhotoPlaceholderWidget(
         start = Offset(0f, 0f),
         end = Offset(1000f, 1000f),
     )
+
+    val titleRes = if (hasPermission) {
+        R.string.standby_photo_frame_empty_title
+    } else {
+        R.string.standby_photo_frame_permission_title
+    }
+
+    val descRes = if (hasPermission) {
+        R.string.standby_photo_frame_empty_desc
+    } else {
+        R.string.standby_photo_frame_permission_desc
+    }
 
     Box(
         modifier = modifier
@@ -383,14 +396,14 @@ fun PhotoPlaceholderWidget(
             modifier = Modifier.padding(24.dp),
         ) {
             Text(
-                text = "Photo Frame Placeholder",
+                text = stringResource(id = titleRes),
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                 color = theme.textColor,
                 textAlign = TextAlign.Center,
             )
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Photo frame will be available later without requiring extra permissions.",
+                text = stringResource(id = descRes),
                 style = MaterialTheme.typography.bodySmall,
                 color = theme.secondaryTextColor,
                 textAlign = TextAlign.Center,

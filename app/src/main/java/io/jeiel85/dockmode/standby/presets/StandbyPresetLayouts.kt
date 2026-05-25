@@ -36,7 +36,7 @@ import io.jeiel85.dockmode.standby.widgets.BatteryCircleWidget
 import io.jeiel85.dockmode.standby.widgets.BatteryWidget
 import io.jeiel85.dockmode.standby.widgets.CalendarPreviewWidget
 import io.jeiel85.dockmode.standby.widgets.DateWidget
-import io.jeiel85.dockmode.standby.widgets.PhotoPlaceholderWidget
+import io.jeiel85.dockmode.standby.widgets.PhotoFrameEmptyWidget
 import io.jeiel85.dockmode.standby.widgets.TimeWidget
 import kotlinx.coroutines.delay
 import java.util.Locale
@@ -322,7 +322,7 @@ fun BatteryDockPreset(
 }
 
 @Composable
-fun PhotoFramePlaceholderPreset(
+fun PhotoFramePreset(
     state: StandbyUiState,
     theme: StandbyThemePreset,
     locale: Locale,
@@ -366,7 +366,10 @@ fun PhotoFramePlaceholderPreset(
                 )
             }
         } else {
-            PhotoPlaceholderWidget(theme = theme)
+            PhotoFrameEmptyWidget(
+                hasPermission = state.galleryPermissionState,
+                theme = theme,
+            )
         }
 
         Box(
@@ -389,8 +392,16 @@ fun PhotoFramePlaceholderPreset(
                     locale = locale,
                     fontSize = 24.sp,
                 )
+                val isKo = locale.language == "ko"
+                val subtitle = if (hasImages) {
+                    if (isKo) "포토 프레임 (슬라이드 쇼)" else "Photo Frame (Slide Show)"
+                } else if (state.galleryPermissionState) {
+                    if (isKo) "포토 프레임" else "Photo Frame"
+                } else {
+                    if (isKo) "포토 프레임 (권한 필요)" else "Photo Frame (Permission Required)"
+                }
                 Text(
-                    text = if (hasImages) "Photo Frame (Slide Show)" else "Photo Frame Placeholder Active",
+                    text = subtitle,
                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
                     color = theme.textColor.copy(alpha = 0.8f),
                 )

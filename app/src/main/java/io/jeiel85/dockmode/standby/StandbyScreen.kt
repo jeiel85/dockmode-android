@@ -39,7 +39,7 @@ import io.jeiel85.dockmode.standby.presets.BatteryDockPreset
 import io.jeiel85.dockmode.standby.presets.CalendarBoardPreset
 import io.jeiel85.dockmode.standby.presets.MinimalClockPreset
 import io.jeiel85.dockmode.standby.presets.OledNightClockPreset
-import io.jeiel85.dockmode.standby.presets.PhotoFramePlaceholderPreset
+import io.jeiel85.dockmode.standby.presets.PhotoFramePreset
 import io.jeiel85.dockmode.standby.presets.SplitDashboardPreset
 import io.jeiel85.dockmode.standby.presets.WarmBedsidePreset
 import io.jeiel85.dockmode.standby.theme.StandbyThemeRegistry
@@ -183,7 +183,7 @@ private fun RenderPreset(
         ClockStyle.SplitDashboard -> SplitDashboardPreset(state, theme, locale)
         ClockStyle.CalendarFocus -> CalendarBoardPreset(state, theme, locale)
         ClockStyle.BatteryDock -> BatteryDockPreset(state, theme, locale)
-        ClockStyle.PhotoFrame -> PhotoFramePlaceholderPreset(state, theme, locale)
+        ClockStyle.PhotoFrame -> PhotoFramePreset(state, theme, locale)
         ClockStyle.Digital -> SplitDashboardPreset(state, theme, locale)
     }
 }

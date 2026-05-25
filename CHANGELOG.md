@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Added
+- 포토 프레임의 권한 요청 안내 및 빈 상태 안내를 위한 다국어(ko/en) 문자열 리소스 추가 (`standby_photo_frame_permission_title`/`_desc`, `standby_photo_frame_empty_title`/`_desc`)
+
+### Changed
+- 포토 프레임 모드의 하드코딩된 임시 "Placeholder" 문구와 상태명을 제거하고, 갤러리 접근 권한 및 이미지 유무 상태를 기민하게 반영하는 반응형 실 데이터 화면(PhotoFrameEmptyWidget 및 PhotoFramePreset)으로 완전 교체
+- 포토 프레임 우측 하단의 하드코딩 설명 부분을 실 데이터 상태(슬라이드 쇼 진행 중 / 포토 프레임 / 권한 필요)에 맞추어 다국어로 반응하도록 개선
+
+### Verification
+- 단위 테스트 및 린트 검사 (`testDebugUnitTest`, `ktlintCheck`, `detekt`) 100% 통과 완료
+- 디버그 빌드 APK 생성 및 유효성 검증 성공
+
 ## v1.2.0 - 2026-05-25
 
 ### Added
