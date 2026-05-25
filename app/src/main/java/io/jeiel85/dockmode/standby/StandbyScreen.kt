@@ -51,13 +51,15 @@ fun StandbyScreen(
     state: StandbyUiState,
     onClockStyleChanged: (ClockStyle) -> Unit = {},
     @Suppress("UNUSED_PARAMETER") onThemeChanged: (String) -> Unit = {},
+    onTriggerGalleryPermission: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val locale: Locale = configuration.locales.get(0) ?: Locale.getDefault()
 
-    // 1. Fetch current theme preset
-    val theme = StandbyThemeRegistry.findById(state.selectedThemeId)
+    // 1. Fetch current theme preset. Force dark theme under low lux active
+    val effectiveThemeId = if (state.nightModeActiveBySensor) "oled_pure_black" else state.selectedThemeId
+    val theme = StandbyThemeRegistry.findById(effectiveThemeId)
 
     // 2. Calculate Burn-in Protection offsets
     val (dx, dy) = if (state.burnInGuard || theme.id == "oled_pure_black" || state.clockStyle == ClockStyle.OledNight) {
@@ -112,7 +114,11 @@ fun StandbyScreen(
     }.pointerInput(Unit) {
         detectTapGestures(
             onTap = {
-                (context as? Activity)?.finish()
+                if (state.clockStyle == ClockStyle.PhotoFrame && !state.galleryPermissionState) {
+                    onTriggerGalleryPermission()
+                } else {
+                    (context as? Activity)?.finish()
+                }
             },
         )
     }

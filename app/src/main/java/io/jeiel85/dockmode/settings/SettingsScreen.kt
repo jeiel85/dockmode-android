@@ -49,6 +49,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -145,6 +146,10 @@ fun SettingsScreen(
                 onBurnInGuardChanged = viewModel::setBurnInGuard,
                 keepScreenOn = settings.keepScreenOn,
                 onKeepScreenOnChanged = viewModel::setKeepScreenOn,
+                autoNightModeBySensor = settings.autoNightModeByLightSensor,
+                onAutoNightModeBySensorChanged = viewModel::setAutoNightModeBySensor,
+                sensorSensitivityLux = settings.lightSensorSensitivityLux,
+                onSensorSensitivityLuxChanged = viewModel::setSensorSensitivityLux,
             )
 
             HorizontalDivider(
@@ -379,7 +384,15 @@ private fun PreferencesSection(
     onBurnInGuardChanged: (Boolean) -> Unit,
     keepScreenOn: Boolean,
     onKeepScreenOnChanged: (Boolean) -> Unit,
+    autoNightModeBySensor: Boolean,
+    onAutoNightModeBySensorChanged: (Boolean) -> Unit,
+    sensorSensitivityLux: Int,
+    onSensorSensitivityLuxChanged: (Int) -> Unit,
 ) {
+    val configuration = LocalConfiguration.current
+    val locale: Locale = configuration.locales.get(0) ?: Locale.getDefault()
+    val isKo = locale.language == "ko"
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -401,6 +414,26 @@ private fun PreferencesSection(
         )
 
         ControlRow(
+            title = if (isKo) "조도 센서 자동 야간 모드" else "Light Sensor Night Mode",
+            desc = if (isKo) {
+                "주변이 어두워지면 화면이 자동으로 저휘도 야간 모드로 변경됩니다."
+            } else {
+                "Automatically switches screen to dim bedside mode when ambient light falls."
+            },
+            checked = autoNightModeBySensor,
+            modifier = Modifier.testTag("switch_auto_night_mode_by_sensor"),
+            onCheckedChange = onAutoNightModeBySensorChanged,
+        )
+
+        if (autoNightModeBySensor) {
+            SensorSensitivitySelector(
+                isKo = isKo,
+                sensorSensitivityLux = sensorSensitivityLux,
+                onSensorSensitivityLuxChanged = onSensorSensitivityLuxChanged,
+            )
+        }
+
+        ControlRow(
             title = stringResource(id = R.string.settings_burn_in_guard),
             desc = stringResource(id = R.string.settings_burn_in_guard_desc),
             checked = burnInGuard,
@@ -415,6 +448,89 @@ private fun PreferencesSection(
             modifier = Modifier.testTag("switch_keep_screen_on"),
             onCheckedChange = onKeepScreenOnChanged,
         )
+    }
+}
+
+@Composable
+private fun SensorSensitivitySelector(
+    isKo: Boolean,
+    sensorSensitivityLux: Int,
+    onSensorSensitivityLuxChanged: (Int) -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 12.dp, top = 4.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        Text(
+            text = if (isKo) "야간 센서 민감도 설정" else "Sensor Sensitivity Threshold",
+            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
+            color = MaterialTheme.colorScheme.onBackground,
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            val sensOptions = listOf(5, 10, 20, 50)
+            sensOptions.forEach { lux ->
+                val label = getSensitivityLabel(lux, isKo)
+                val isSelected = sensorSensitivityLux == lux
+                val bColor = if (isSelected) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.outline.copy(
+                        alpha = 0.2f,
+                    )
+                }
+                val cColor = if (isSelected) {
+                    MaterialTheme.colorScheme.primary.copy(
+                        alpha = 0.08f,
+                    )
+                } else {
+                    MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                }
+
+                Card(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(46.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .clickable { onSensorSensitivityLuxChanged(lux) }
+                        .testTag("sens_card_$lux"),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = CardDefaults.cardColors(containerColor = cColor),
+                    border = BorderStroke(1.2.dp, bColor),
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = label,
+                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                            color = if (isSelected) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            },
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+private fun getSensitivityLabel(lux: Int, isKo: Boolean): String {
+    return when (lux) {
+        5 -> if (isKo) "침실 (5 lx)" else "Bedroom (5 lx)"
+        10 -> if (isKo) "어두움 (10 lx)" else "Dim (10 lx)"
+        20 -> if (isKo) "은은함 (20 lx)" else "Soft (20 lx)"
+        50 -> if (isKo) "실내 (50 lx)" else "Indoor (50 lx)"
+        else -> "$lux lx"
     }
 }
 

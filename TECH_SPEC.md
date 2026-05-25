@@ -40,6 +40,10 @@ Artifact prefix: dockmode
   https://developer.android.com/identity/providers/calendar-provider
 - 런타임 권한은 Manifest 선언과 사용자에게 권한 필요성을 설명하는 UX가 필요하다.  
   https://developer.android.com/training/permissions/requesting
+- SensorManager 및 Sensor.TYPE_LIGHT 하드웨어 조도 센서를 통해 주변 밝기 값을 실시간 측정할 수 있다.  
+  https://developer.android.com/reference/android/hardware/Sensor
+- Android 13(API 33) 이상에서는 미디어 이미지 쿼리를 위해 `READ_MEDIA_IMAGES` 권한이 필요하며, 이전 버전은 `READ_EXTERNAL_STORAGE` 권한을 사용한다.  
+  https://developer.android.com/about/versions/13/behavior-changes-13#granular-media-permissions
 
 ## 3. 모듈 구조
 
@@ -57,6 +61,8 @@ app/
     data/calendar/CalendarRepository.kt
     data/battery/BatteryStateRepository.kt
     data/settings/SettingsRepository.kt
+    data/gallery/GalleryRepository.kt
+    data/sensor/LightSensorRepository.kt
     ui/theme/
     util/
 ```
@@ -184,12 +190,29 @@ enum class ChargingState {
 역할:
 
 - DataStore Preferences로 사용자 설정 저장
-- 시계 스타일, 테마 스타일, 일정 표시 여부, 야간 모드, 번인 방지, 화면 유지 설정 관리
+- 시계 스타일, 테마 스타일, 일정 표시 여부, 야간 모드, 번인 방지, 화면 유지, 조도 센서 야간 모드 및 4단계 감도 설정 관리
+
+### 5.7 GalleryRepository
+
+역할:
+
+- 갤러리 미디어 접근 권한 유효성 체크
+- ContentResolver를 활용하여 기기 내부의 미디어 이미지 폴더의 고유 URI 목록을 비동기(IO Dispatcher) 쿼리
+
+### 5.8 LightSensorRepository
+
+역할:
+
+- `Sensor.TYPE_LIGHT` 하드웨어 조도 센서를 lifecycle-safe한 flow 스트림으로 감지
+- `callbackFlow` 래퍼 내에서 리스너가 등록되고, flow 종료 및 수명주기 해제 시 `unregisterListener`를 완벽히 수행하여 누수 방지
+- 센서 미지원 디바이스를 위해 기본 999.0f lux 방출 Fallback 지원
 
 ## 6. Manifest 설계
 
 ```xml
 <uses-permission android:name="android.permission.READ_CALENDAR" />
+<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
 
 <application
     android:theme="@style/Theme.DockMode">
@@ -239,6 +262,10 @@ data class StandbyUiState(
     val todayEvents: List<CalendarEventSummary> = emptyList(),
     val calendarLoadFailed: Boolean = false,
     val isLoadingEvents: Boolean = false,
+    val galleryImages: List<android.net.Uri> = emptyList(),
+    val autoNightModeByLightSensor: Boolean = false,
+    val lightSensorSensitivityLux: Int = 10,
+    val isSensorNightActive: Boolean = false,
 )
 ```
 

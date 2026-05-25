@@ -7,4 +7,6 @@ data class DockModeSettings(
     val nightMode: Boolean = true,
     val burnInGuard: Boolean = true,
     val keepScreenOn: Boolean = true,
+    val autoNightModeByLightSensor: Boolean = false,
+    val lightSensorSensitivityLux: Int = 10,
 )

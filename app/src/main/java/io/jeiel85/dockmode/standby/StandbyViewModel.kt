@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import io.jeiel85.dockmode.AppContainer
 import io.jeiel85.dockmode.data.battery.BatteryStateRepository
 import io.jeiel85.dockmode.data.calendar.CalendarRepository
+import io.jeiel85.dockmode.data.gallery.GalleryRepository
+import io.jeiel85.dockmode.data.sensor.LightSensorRepository
 import io.jeiel85.dockmode.data.settings.SettingsRepository
 import io.jeiel85.dockmode.domain.model.CalendarPermissionState
 import io.jeiel85.dockmode.domain.model.ClockStyle
@@ -23,6 +25,8 @@ class StandbyViewModel(
     private val batteryStateRepository: BatteryStateRepository,
     private val calendarRepository: CalendarRepository,
     private val settingsRepository: SettingsRepository,
+    private val galleryRepository: GalleryRepository,
+    private val lightSensorRepository: LightSensorRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(StandbyUiState())
@@ -33,20 +37,25 @@ class StandbyViewModel(
             TickerFlow.seconds(),
             batteryStateRepository.observeChargingState(),
             settingsRepository.settings,
-        ) { now, charging, settings ->
-            Triple(now, charging, settings)
-        }.onEach { (now, charging, settings) ->
-            _uiState.value = _uiState.value.copy(
+            lightSensorRepository.observeLightSensor(),
+        ) { now, charging, settings, lux ->
+            val isNightActive = settings.autoNightModeByLightSensor &&
+                lux <= settings.lightSensorSensitivityLux
+            _uiState.value.copy(
                 nowMillis = now,
                 chargingState = charging,
                 clockStyle = settings.clockStyle,
                 selectedThemeId = settings.selectedThemeId,
                 showCalendar = settings.showCalendar,
                 burnInGuard = settings.burnInGuard,
+                nightModeActiveBySensor = isNightActive,
             )
+        }.onEach { state ->
+            _uiState.value = state
         }.launchIn(viewModelScope)
 
         refreshCalendar()
+        refreshGalleryPhotos()
     }
 
     fun setClockStyle(style: ClockStyle) {
@@ -58,6 +67,21 @@ class StandbyViewModel(
     fun setSelectedThemeId(themeId: String) {
         viewModelScope.launch {
             settingsRepository.setSelectedThemeId(themeId)
+        }
+    }
+
+    fun refreshGalleryPhotos() {
+        viewModelScope.launch {
+            val hasPermission = galleryRepository.hasReadPermission()
+            val images = if (hasPermission) {
+                galleryRepository.loadLocalImages()
+            } else {
+                emptyList()
+            }
+            _uiState.value = _uiState.value.copy(
+                localGalleryImages = images,
+                galleryPermissionState = hasPermission,
+            )
         }
     }
 
@@ -106,6 +130,8 @@ class StandbyViewModel(
                 container.batteryStateRepository,
                 container.calendarRepository,
                 container.settingsRepository,
+                container.galleryRepository,
+                container.lightSensorRepository,
             ) as T
         }
     }

@@ -1,0 +1,60 @@
+// Reference-only Kotlin snippets for DockMode standby preset extension.
+// Copy into the actual project only after checking existing architecture.
+
+package io.jeiel85.dockmode.ui.standby
+
+import androidx.compose.runtime.Immutable
+import androidx.compose.ui.graphics.Color
+
+@Immutable
+data class StandbyPreset(
+    val id: String,
+    val displayNameKo: String,
+    val displayNameEn: String,
+    val descriptionKo: String,
+    val defaultThemeId: String,
+    val widgets: List<StandbyWidgetType>,
+    val burnInProtection: Boolean = false,
+)
+
+enum class StandbyWidgetType {
+    TIME,
+    DATE,
+    BATTERY,
+    CHARGING_STATE,
+    CALENDAR_PREVIEW,
+    PHOTO_PLACEHOLDER,
+    PRESET_NAME,
+}
+
+@Immutable
+data class StandbyThemePreset(
+    val id: String,
+    val displayNameKo: String,
+    val displayNameEn: String,
+    val backgroundColor: Color,
+    val textColor: Color,
+    val secondaryTextColor: Color,
+    val accentColor: Color,
+    val cardColor: Color,
+    val isLowBrightness: Boolean,
+)
+
+object StandbyPresetIds {
+    const val MINIMAL_CLOCK = "minimal_clock"
+    const val WARM_BEDSIDE = "warm_bedside"
+    const val OLED_NIGHT_CLOCK = "oled_night_clock"
+    const val SPLIT_DASHBOARD = "split_dashboard"
+    const val CALENDAR_BOARD = "calendar_board"
+    const val BATTERY_DOCK = "battery_dock"
+    const val PHOTO_FRAME_PLACEHOLDER = "photo_frame_placeholder"
+}
+
+object StandbyThemeIds {
+    const val MIDNIGHT_GLASS = "midnight_glass"
+    const val WARM_BEDSIDE = "warm_bedside"
+    const val OLED_PURE_BLACK = "oled_pure_black"
+    const val AURORA_GRADIENT = "aurora_gradient"
+    const val PAPER_CALENDAR = "paper_calendar"
+    const val MATERIAL_YOU = "material_you"
+}

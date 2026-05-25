@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import io.jeiel85.dockmode.domain.model.ClockStyle
@@ -22,6 +23,8 @@ class SettingsRepository(private val context: Context) {
         val NightMode = booleanPreferencesKey("night_mode")
         val BurnInGuard = booleanPreferencesKey("burn_in_guard")
         val KeepScreenOn = booleanPreferencesKey("keep_screen_on")
+        val AutoNightModeBySensor = booleanPreferencesKey("auto_night_mode_by_sensor")
+        val SensorSensitivityLux = intPreferencesKey("sensor_sensitivity_lux")
     }
 
     val settings: Flow<DockModeSettings> = context.dockModeDataStore.data.map { prefs ->
@@ -32,6 +35,8 @@ class SettingsRepository(private val context: Context) {
             nightMode = prefs[Keys.NightMode] ?: true,
             burnInGuard = prefs[Keys.BurnInGuard] ?: true,
             keepScreenOn = prefs[Keys.KeepScreenOn] ?: true,
+            autoNightModeByLightSensor = prefs[Keys.AutoNightModeBySensor] ?: false,
+            lightSensorSensitivityLux = prefs[Keys.SensorSensitivityLux] ?: 10,
         )
     }
 
@@ -41,6 +46,14 @@ class SettingsRepository(private val context: Context) {
 
     suspend fun setSelectedThemeId(themeId: String) {
         context.dockModeDataStore.edit { it[Keys.SelectedThemeIdKey] = themeId }
+    }
+
+    suspend fun setAutoNightModeBySensor(enabled: Boolean) {
+        context.dockModeDataStore.edit { it[Keys.AutoNightModeBySensor] = enabled }
+    }
+
+    suspend fun setSensorSensitivityLux(lux: Int) {
+        context.dockModeDataStore.edit { it[Keys.SensorSensitivityLux] = lux }
     }
 
     suspend fun setShowCalendar(enabled: Boolean) {

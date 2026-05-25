@@ -23,6 +23,12 @@ class SettingsViewModel(
 
     fun setThemeId(themeId: String) = viewModelScope.launch { repository.setSelectedThemeId(themeId) }
 
+    fun setAutoNightModeBySensor(enabled: Boolean) = viewModelScope.launch {
+        repository.setAutoNightModeBySensor(enabled)
+    }
+
+    fun setSensorSensitivityLux(lux: Int) = viewModelScope.launch { repository.setSensorSensitivityLux(lux) }
+
     fun setShowCalendar(enabled: Boolean) = viewModelScope.launch { repository.setShowCalendar(enabled) }
 
     fun setNightMode(enabled: Boolean) = viewModelScope.launch { repository.setNightMode(enabled) }

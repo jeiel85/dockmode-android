@@ -217,3 +217,29 @@ v1.0까지는 Google Calendar REST API를 사용하지 않고 Android Calendar P
 
 - 마지막으로 선택된 시계 프리셋 및 테마 아이디는 DataStore 설정 저장소에 실시간 저장되어 앱을 재시작해도 온전히 복원된다.
 - 설정 화면의 UI도 LazyRow 기반 가로 스크롤 카드 레이아웃으로 개편하여 공간을 적게 차지하면서도 깔끔한 조작계를 제공한다.
+
+---
+
+## ADR-011: 로컬 갤러리 사진 실연동, 조도 센서 자동 야간 모드 및 태블릿 5:5 대칭 분할 레이아웃 튜닝
+
+날짜: 2026-05-25
+
+### 결정
+
+- 로컬 갤러리 연동: 외부 클라우드 호출 대신 사용자 기기의 로컬 저장소를 ContentResolver로 직접 쿼리하여 Photo Frame 내에서 10초 주기로 Coil `AsyncImage` + `Crossfade` 연동 슬라이드 쇼를 구현한다.
+- 조도 센서 야간 테마: `Sensor.TYPE_LIGHT` 하드웨어 센서를 lifecycle-safe한 flow 스트림으로 감지하여, 주변 밝기가 설정된 4단계 감도 미만으로 어두워지면 화면을 강제로 `oled_pure_black` 테마로 연동한다.
+- 태블릿 레이아웃: 가로 폭이 600dp 이상인 대화면 기기(태블릿, 폴더블)에서는 좌우 5:5 대칭 칼럼 구조(`leftWeight = 1f : rightWeight = 1f`)와 확장 패딩을 적용하여 광활한 화면에 어울리도록 반응형 튜닝을 수행한다.
+- detekt 규정 준수: 설정 UI(`SettingsScreen`) 내 복잡도를 낮추기 위해 `SensorSensitivitySelector` Composable 및 `getSensitivityLabel` 다국어 헬퍼 함수를 추출하여 Cyclomatic Complexity 15 미만 조건을 완벽하게 만족시킨다.
+
+### 이유
+
+- 외부 클라우드 연동(Google Photo API 등)은 불필요한 네트워크 권한 및 API 키, 로그인 계정 부담을 발생시킨다. 로컬 ContentResolver 기반 연동으로 개인정보 보호 최우선 원칙과 앱 동작의 로컬 자립성을 확보한다.
+- 주변 조도가 매우 어두운 베드사이드 환경에서 눈부심을 완벽하게 방지하기 위해 정교한 lux 임계 감도 설정과 OLED 최적화 야간 테마 강제 전환을 제공한다.
+- 광활한 태블릿 가로 화면에서는 기존 모바일 중심의 비대칭 레이아웃이 엉성하게 보일 수 있으므로 웅장한 대칭 칼럼 구조와 앰비언트 마진을 적용하여 하이엔드 액자 느낌의 프리미엄 UX를 선사한다.
+- 린트 및 품질 게이트(detekt/ktlint)를 온전하게 충족하면서도 가독성 높은 고품질 코드를 유지한다.
+
+### 영향
+
+- 사진 프레임 프리셋을 활용하기 위해 최초 진입 시 `READ_MEDIA_IMAGES` (Android 13+) 또는 `READ_EXTERNAL_STORAGE` (Android 13 미만) 권한 승인을 아름답게 유도한다.
+- 조도 센서가 없는 디바이스의 경우 기본 lux를 안전한 최대값(999.0f)으로 처리하여 예외 없이 정상 복구되도록 설계하였다.
+

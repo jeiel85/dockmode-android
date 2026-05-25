@@ -156,14 +156,30 @@
 - ktlint/detekt 정적 분석 `./gradlew ktlintCheck detekt` 100% 성공
 - 디버그 빌드 APK 생성 `./gradlew assembleDebug` 성공
 
+## Milestone 8: 로컬 갤러리 및 조도 센서 실연동, 태블릿 레이아웃 튜닝
+
+- [x] 로컬 갤러리 미디어 읽기 권한 선언 및 권한 요청 런처 구성
+- [x] ContentResolver 기반 로컬 사진 쿼리 및 Photo Frame 10초 주기 Crossfade 슬라이드 쇼 구현
+- [x] 조도 센서(`Sensor.TYPE_LIGHT`) Lifecycle-safe flow 감지 모듈 구현
+- [x] 조도 센서 자동 야간 모드 활성화 및 침실/어두움/은은함/실내 4단계 감도 설정(5, 10, 20, 50 lx) DataStore 저장 및 UI 설정 패널 구현
+- [x] 실시간 조도가 감도 미만으로 떨어질 때 OLED Pure Black 테마 강제 연동 및 저휘도 모드 자동 적용
+- [x] 가로 폭 600dp 이상의 태블릿/폴더블 기기용 좌우 대칭 5:5 웅장한 가로 분할 레이아웃 튜닝
+- [x] detekt 복잡도(complexity 15 미만) 가이드를 지키기 위한 `SensorSensitivitySelector` 리팩토링 및 140자 개행 포맷 정비
+
+완료 기준:
+
+- 로컬 단위 테스트 `./gradlew testDebugUnitTest` 100% 성공
+- ktlint/detekt 정적 분석 `./gradlew ktlintCheck detekt` 100% 성공
+- 디버그 빌드 APK 생성 `./gradlew assembleDebug` 성공
+
 ## 후속 작업 후보
 
 - [ ] 날씨 API 연동 검토: 네트워크 권한과 외부 API 승인 필요
-- [ ] 사진 프레임 모드 검토: 미디어 권한 정책 검토 필요
+- [x] 사진 프레임 모드 검토: 미디어 권한 정책 검토 필요 (Milestone 8 완수)
 - [ ] 홈 화면 위젯 검토
 - [ ] Wear OS 또는 태블릿 전용 모드 검토
-- [ ] 야간 모드 자동 적용(시간/조도 센서) 정책 결정 및 구현
-- [ ] 태블릿/폴더블 가로 분할 레이아웃 튜닝
+- [x] 야간 모드 자동 적용(시간/조도 센서) 정책 결정 및 구현 (Milestone 8 완수)
+- [x] 태블릿/폴더블 가로 분할 레이아웃 튜닝 (Milestone 8 완수)
 - [ ] StandbyScreen instrumented test 추가 (Compose UI Test)
 - [ ] 실기기 DreamService 검증 결과 HISTORY 기록
 - [x] 앱 아이콘 디자인 정식 작업 (`play_store/graphics/app-icon-512.png`, 런처 벡터 동기화)

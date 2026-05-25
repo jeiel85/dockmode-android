@@ -1,5 +1,6 @@
 package io.jeiel85.dockmode.standby.presets
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,13 +15,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import io.jeiel85.dockmode.domain.model.StandbyThemePreset
 import io.jeiel85.dockmode.standby.StandbyUiState
 import io.jeiel85.dockmode.standby.widgets.BatteryCircleWidget
@@ -29,6 +38,7 @@ import io.jeiel85.dockmode.standby.widgets.CalendarPreviewWidget
 import io.jeiel85.dockmode.standby.widgets.DateWidget
 import io.jeiel85.dockmode.standby.widgets.PhotoPlaceholderWidget
 import io.jeiel85.dockmode.standby.widgets.TimeWidget
+import kotlinx.coroutines.delay
 import java.util.Locale
 
 @Composable
@@ -113,7 +123,6 @@ fun OledNightClockPreset(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // OLED night preset uses smaller and very dim text
         TimeWidget(
             nowMillis = state.nowMillis,
             theme = theme,
@@ -137,14 +146,24 @@ fun SplitDashboardPreset(
     locale: Locale,
     modifier: Modifier = Modifier,
 ) {
+    val configuration = LocalConfiguration.current
+    val isTablet = configuration.screenWidthDp >= 600
+
+    val spacing = if (isTablet) 48.dp else 24.dp
+    val leftWeight = if (isTablet) 1.0f else 1.1f
+    val rightWeight = if (isTablet) 1.0f else 0.9f
+    val horizontalPadding = if (isTablet) 32.dp else 0.dp
+
     Row(
-        modifier = modifier.fillMaxSize(),
-        horizontalArrangement = Arrangement.spacedBy(32.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = horizontalPadding),
+        horizontalArrangement = Arrangement.spacedBy(spacing),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
             modifier = Modifier
-                .weight(1.1f)
+                .weight(leftWeight)
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
@@ -153,14 +172,14 @@ fun SplitDashboardPreset(
                 nowMillis = state.nowMillis,
                 theme = theme,
                 locale = locale,
-                fontSize = 82.sp,
+                fontSize = if (isTablet) 96.sp else 82.sp,
             )
             Spacer(modifier = Modifier.height(8.dp))
             DateWidget(
                 nowMillis = state.nowMillis,
                 theme = theme,
                 locale = locale,
-                fontSize = 20.sp,
+                fontSize = if (isTablet) 24.sp else 20.sp,
             )
             Spacer(modifier = Modifier.height(16.dp))
             BatteryWidget(
@@ -171,7 +190,7 @@ fun SplitDashboardPreset(
 
         Column(
             modifier = Modifier
-                .weight(0.9f)
+                .weight(rightWeight)
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
@@ -195,14 +214,24 @@ fun CalendarBoardPreset(
     locale: Locale,
     modifier: Modifier = Modifier,
 ) {
+    val configuration = LocalConfiguration.current
+    val isTablet = configuration.screenWidthDp >= 600
+
+    val spacing = if (isTablet) 54.dp else 36.dp
+    val leftWeight = if (isTablet) 1.0f else 0.8f
+    val rightWeight = if (isTablet) 1.0f else 1.2f
+    val horizontalPadding = if (isTablet) 36.dp else 0.dp
+
     Row(
-        modifier = modifier.fillMaxSize(),
-        horizontalArrangement = Arrangement.spacedBy(36.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = horizontalPadding),
+        horizontalArrangement = Arrangement.spacedBy(spacing),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
             modifier = Modifier
-                .weight(0.8f)
+                .weight(leftWeight)
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
@@ -211,14 +240,14 @@ fun CalendarBoardPreset(
                 nowMillis = state.nowMillis,
                 theme = theme,
                 locale = locale,
-                fontSize = 62.sp,
+                fontSize = if (isTablet) 72.sp else 62.sp,
             )
             Spacer(modifier = Modifier.height(4.dp))
             DateWidget(
                 nowMillis = state.nowMillis,
                 theme = theme,
                 locale = locale,
-                fontSize = 16.sp,
+                fontSize = if (isTablet) 20.sp else 16.sp,
             )
             Spacer(modifier = Modifier.height(14.dp))
             BatteryWidget(
@@ -229,7 +258,7 @@ fun CalendarBoardPreset(
 
         Column(
             modifier = Modifier
-                .weight(1.2f)
+                .weight(rightWeight)
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
@@ -241,7 +270,7 @@ fun CalendarBoardPreset(
                 permissionState = state.calendarPermissionState,
                 locale = locale,
                 theme = theme,
-                maxEvents = 4,
+                maxEvents = if (isTablet) 5 else 4,
             )
         }
     }
@@ -254,8 +283,14 @@ fun BatteryDockPreset(
     locale: Locale,
     modifier: Modifier = Modifier,
 ) {
+    val configuration = LocalConfiguration.current
+    val isTablet = configuration.screenWidthDp >= 600
+    val horizontalPadding = if (isTablet) 64.dp else 0.dp
+
     Row(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = horizontalPadding),
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -267,20 +302,21 @@ fun BatteryDockPreset(
                 nowMillis = state.nowMillis,
                 theme = theme,
                 locale = locale,
-                fontSize = 76.sp,
+                fontSize = if (isTablet) 90.sp else 76.sp,
             )
             Spacer(modifier = Modifier.height(4.dp))
             DateWidget(
                 nowMillis = state.nowMillis,
                 theme = theme,
                 locale = locale,
-                fontSize = 16.sp,
+                fontSize = if (isTablet) 20.sp else 16.sp,
             )
         }
 
         BatteryCircleWidget(
             chargingState = state.chargingState,
             theme = theme,
+            modifier = if (isTablet) Modifier.padding(16.dp) else Modifier,
         )
     }
 }
@@ -292,11 +328,46 @@ fun PhotoFramePlaceholderPreset(
     locale: Locale,
     modifier: Modifier = Modifier,
 ) {
+    var currentImageIndex by remember { mutableStateOf(0) }
+
+    val hasImages = state.localGalleryImages.isNotEmpty()
+
+    LaunchedEffect(state.localGalleryImages) {
+        if (state.localGalleryImages.isNotEmpty()) {
+            currentImageIndex = 0
+        }
+    }
+
+    LaunchedEffect(hasImages) {
+        if (hasImages) {
+            while (true) {
+                delay(10000L) // 10초 주기로 순환
+                currentImageIndex = (currentImageIndex + 1) % state.localGalleryImages.size
+            }
+        }
+    }
+
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        PhotoPlaceholderWidget(theme = theme)
+        if (hasImages) {
+            val currentImageUrl = state.localGalleryImages[currentImageIndex]
+            Crossfade(
+                targetState = currentImageUrl,
+                animationSpec = androidx.compose.animation.core.tween(1000),
+                label = "photo_fade",
+            ) { url ->
+                AsyncImage(
+                    model = url,
+                    contentDescription = "Photo slide",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+        } else {
+            PhotoPlaceholderWidget(theme = theme)
+        }
 
         Box(
             modifier = Modifier
@@ -319,7 +390,7 @@ fun PhotoFramePlaceholderPreset(
                     fontSize = 24.sp,
                 )
                 Text(
-                    text = "Photo Frame Placeholder Active",
+                    text = if (hasImages) "Photo Frame (Slide Show)" else "Photo Frame Placeholder Active",
                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
                     color = theme.textColor.copy(alpha = 0.8f),
                 )

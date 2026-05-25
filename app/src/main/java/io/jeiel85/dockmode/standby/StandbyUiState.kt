@@ -17,6 +17,9 @@ data class StandbyUiState(
     val todayEvents: List<CalendarEventSummary> = emptyList(),
     val calendarLoadFailed: Boolean = false,
     val isLoadingEvents: Boolean = false,
+    val localGalleryImages: List<String> = emptyList(),
+    val galleryPermissionState: Boolean = false,
+    val nightModeActiveBySensor: Boolean = false,
 )
 
 enum class StandbyLaunchMode {

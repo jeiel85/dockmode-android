@@ -3,6 +3,8 @@ package io.jeiel85.dockmode
 import android.app.Application
 import io.jeiel85.dockmode.data.battery.BatteryStateRepository
 import io.jeiel85.dockmode.data.calendar.CalendarRepository
+import io.jeiel85.dockmode.data.gallery.GalleryRepository
+import io.jeiel85.dockmode.data.sensor.LightSensorRepository
 import io.jeiel85.dockmode.data.settings.SettingsRepository
 
 class DockModeApplication : Application() {
@@ -13,6 +15,8 @@ interface AppContainer {
     val batteryStateRepository: BatteryStateRepository
     val calendarRepository: CalendarRepository
     val settingsRepository: SettingsRepository
+    val galleryRepository: GalleryRepository
+    val lightSensorRepository: LightSensorRepository
 }
 
 private class DefaultAppContainer(application: Application) : AppContainer {
@@ -22,4 +26,8 @@ private class DefaultAppContainer(application: Application) : AppContainer {
         CalendarRepository(application.applicationContext)
     override val settingsRepository: SettingsRepository =
         SettingsRepository(application.applicationContext)
+    override val galleryRepository: GalleryRepository =
+        GalleryRepository(application.applicationContext)
+    override val lightSensorRepository: LightSensorRepository =
+        LightSensorRepository(application.applicationContext)
 }

@@ -2,14 +2,26 @@
 
 ## Unreleased
 
-### Documentation
-- GitHub Pages 랜딩 페이지를 실제 앱 스크린샷, 권한 정책, Play Store 준비 자산을 보여 주는 제품 소개형 페이지로 개편
-- README를 앱 정체성, 화면 미리보기, 현재 구현 상태, Play Store 등록 자료 경로 중심으로 재구성
-- Pages용 Open Graph 이미지와 favicon으로 `play_store/graphics/`의 앱 아이콘/피처 그래픽 사본을 추가
+## v1.2.0 - 2026-05-25
+
+### Added
+- 로컬 갤러리 미디어 읽기 권한(`READ_MEDIA_IMAGES` 및 `READ_EXTERNAL_STORAGE`) 선언 및 런타임 권한 요청 흐름 추가
+- ContentResolver 기반 기기 내 사진 폴더를 비동기 쿼리하는 `GalleryRepository` 추가
+- Photo Frame 프리셋 내에서 Coil `AsyncImage`와 `Crossfade` 연동을 통한 10초 주기 슬라이드 쇼 페이드 효과 자동 회전 기능 추가
+- `Sensor.TYPE_LIGHT` 조도 센서 실시간 감지를 Lifecycle-safe하게 flow로 래핑한 `LightSensorRepository` 추가
+- 조도 센서 자동 야간 모드 토글 스위치 및 침실/어두움/은은함/실내 4단계 감도 선택(5, 10, 20, 50 lux) UI 화면 추가
+- 주변 조도가 선택된 감도 미만으로 떨어지면 화면을 OLED Pure Black 테마로 자동 매핑해 강제 연동하는 기능 추가
+
+### Changed
+- 태블릿 및 폴더블 기기의 광활한 가로 화면(가로 폭 600dp 이상)에 맞게, 좌우를 웅장한 대칭 칼럼 구조(1f : 1f 비율)로 나누고 패딩을 확장하여 웅장하게 반응형 레이아웃 튜닝
+
+### Performance
+- detekt의 Cyclomatic Complexity threshold(15) 제약을 준수하기 위해 설정 화면 내 민감도 선택 파트를 `SensorSensitivitySelector`와 `getSensitivityLabel`로 구조 분리 리팩토링 수행
 
 ### Verification
-- GitHub Pages 설정(`main` 브랜치 `/docs`, HTTPS enforced), 저장소 description/homepage/topics 확인
-- GitHub Actions Android CI와 pages-build-deployment 성공 확인, 공개 랜딩/개인정보 URL HTTP 200 확인
+- 단위 테스트 `.\gradlew.bat testDebugUnitTest` 100% 통과 성공
+- ktlint/detekt `.\gradlew.bat ktlintCheck detekt` 스타일 가이드 및 복잡도 검증 100% 통과 성공
+- 최종 디버그 패키징 `.\gradlew.bat assembleDebug` 성공 (APK 산출물 생성)
 
 ## v1.1.0 - 2026-05-25
 

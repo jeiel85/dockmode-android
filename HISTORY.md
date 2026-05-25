@@ -1,5 +1,27 @@
 # HISTORY.md
 
+## 2026-05-25 (로컬 갤러리, 조도 센서 야간 모드 및 태블릿 레이아웃 실연동 개발)
+
+- 작업: 2차 마일스톤 후속 작업(로컬 갤러리 사진 실연동, 조도 센서 기반 자동 야간 모드 튜닝, 태블릿/폴더블 반응형 레이아웃 세밀 튜닝)을 완벽하게 완수함.
+- 주요 변경 사항:
+  - 신규: `data/gallery/GalleryRepository.kt` (ContentResolver 기반 갤러리 쿼리 및 권한 상태 체크 구현)
+  - 신규: `data/sensor/LightSensorRepository.kt` (조도 센서를 flow로 변환 및 Lifecycle-safe한 callbackFlow 리스너 구현)
+  - 갱신: `domain/model/DockModeSettings.kt`, `data/settings/SettingsRepository.kt` (조도 센서 자동 야간 모드 및 4단계 감도 설정 lux 저장 기능 추가)
+  - 갱신: `standby/StandbyUiState.kt` (갤러리 이미지 URI 목록, 센서 감지 활성 상태 플래그 추가)
+  - 갱신: `standby/StandbyViewModel.kt` (조도 센서 Flow를 결합하여 실시간 lux가 감도 미만 시 야간 모드 자동 매핑, 갤러리 사진 비동기 로딩)
+  - 갱신: `standby/presets/StandbyPresetLayouts.kt` (Coil을 사용한 Photo Frame 10초 주기 슬라이드 쇼 페이드 인/아웃(Crossfade) 및 태블릿/폴더블용 가로 분할 5:5 웅장한 대칭 칼럼 레이아웃 튜닝)
+  - 갱신: `standby/StandbyRoute.kt`, `standby/StandbyScreen.kt` (런타임 사진 권한 유도 및 획득 흐름 연동, 센서 야간 플래그 켜짐 시 저휘도 `oled_pure_black` 테마 강제 덮어쓰기 적용)
+  - 갱신: `settings/SettingsViewModel.kt`, `settings/SettingsScreen.kt` (조도 센서 야간 모드 스위치 및 침실/어두움/은은함/실내 4단계 감도 카드 선택 인터페이스 추가, detekt 복잡도 한계 극복을 위한 헬퍼 함수 리팩토링)
+  - 갱신: `AndroidManifest.xml` (갤러리 연동용 `READ_MEDIA_IMAGES` 및 `READ_EXTERNAL_STORAGE` 권한 추가)
+  - 갱신: `gradle/libs.versions.toml`, `app/build.gradle.kts` (Coil Compose 라이브러리 의존성 추가)
+- 검증:
+  - 로컬 단위 테스트: `./gradlew testDebugUnitTest` 100% 성공
+  - 로컬 정적 분석 및 린트: `./gradlew ktlintCheck detekt` 100% 성공 (detekt Cyclomatic Complexity threshold 15를 충족하기 위해 `SensorSensitivitySelector`와 `getSensitivityLabel`을 리팩토링 및 140자 길이 완벽 대응)
+  - 로컬 디버그 빌드: `./gradlew assembleDebug` 100% 성공 (최종 debug APK 패키징 성공)
+- 결과: 로컬 갤러리 실연동, 조도 센서 침실 자동 야간 테마 연동, 가로형 태블릿 웅장한 레이아웃 튜닝 완료.
+- 후속 작업:
+  - 외부 날씨(Weather) API 연동 3차 마일스톤 진행
+
 ## 2026-05-25 (대기모드 디자인 프리셋 및 테마 추가 개발)
 
 - 작업: DockMode 대기화면에 8가지의 다양한 시각 프리셋(Minimal, Digital, CalendarFocus, WarmBedside, OledNight, SplitDashboard, BatteryDock, PhotoFrame)과 6가지 테마(Midnight Glass, Warm Bedside, OLED Pure Black, Aurora Gradient, Paper Calendar, Material You)를 제공하는 확장 개발을 성공적으로 완수함.
