@@ -1,5 +1,19 @@
 # HISTORY.md
 
+## 2026-05-26 (v1.3.0 정식 통합 릴리즈)
+
+- 작업: DockMode 대규모 디자인 리뉴얼, 8종 프리셋, 6종 테마, 로컬 갤러리/조도 센서 자동 야간 모드 및 태블릿 최적화(Milestone 7, 8, 9)를 통합 반영한 v1.3.0 정식 릴리즈 배포를 완료함.
+- 주요 변경 사항:
+  - 갱신: `app/build.gradle.kts` (`versionCode` 3 -> 4, `versionName` "0.1.2" -> "1.3.0")
+  - 갱신: `CHANGELOG.md` (`Unreleased` 내용을 `v1.3.0` 정식 릴리즈로 이관)
+  - 신규: `docs/releases/v1.3.0.md` (GitHub Release 자동 생성용 본문 작성)
+  - 신규: `play_store/release_notes/v1.3.0.txt` (Play Store 등록용 출시 노트 한국어/영어 작성)
+- 검증:
+  - 로컬 정적 검사 및 린트: `ktlintCheck`, `detekt`, `testDebugUnitTest` 100% 성공 검증 (CI에서 재검증)
+  - 로컬 빌드: `./gradlew assembleDebug` 100% 성공 확인
+  - 릴리즈 자동화: git tag `v1.3.0` 생성 및 푸시를 통한 GitHub Actions CI 트리거링
+- 결과: 대규모 리뉴얼 및 실데이터 연동 버전의 빌드 배포를 정상적으로 완료함.
+
 ## 2026-05-25 (포토 프레임 플레이스홀더/더미 완벽 제거 및 실 데이터 기반 동적 렌더링 개발)
 
 - 작업: 포토 프레임 모드의 하드코딩된 더미 문자열("임시 플레이스홀더") 및 구조 명칭을 완전히 정리하고, 실제 갤러리 권한 및 이미지 유무 상태를 반영하도록 반응형 실 데이터 구조를 구축함.

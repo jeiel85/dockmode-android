@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## Unreleased
+## v1.3.0 - 2026-05-26
 
 ### Added
 - 포토 프레임의 권한 요청 안내 및 빈 상태 안내를 위한 다국어(ko/en) 문자열 리소스 추가 (`standby_photo_frame_permission_title`/`_desc`, `standby_photo_frame_empty_title`/`_desc`)

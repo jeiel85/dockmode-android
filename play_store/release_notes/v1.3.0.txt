@@ -1,0 +1,20 @@
+<ko-KR>
+대기 모드 대규모 기능 확장 및 최적화 업데이트입니다.
+
+· 8가지 다양한 시계 프리셋 및 6가지 풍부한 Ambient 테마 도입
+· 대기화면 좌우 스와이프 제스처를 통한 실시간 프리셋 전환 지원
+· 미디어 권한 연동 로컬 사진 10초 주기 액자 슬라이드쇼 추가
+· 조도 센서 실시간 감지 기반 침실용 OLED 자동 야간 모드 제공
+· 가로 600dp 이상 태블릿/폴더블 기기용 좌우 5:5 대칭 분할 레이아웃 튜닝
+· 포토 프레임 모드 더미 제거 및 반응형 Empty 가이드 화면 적용
+</ko-KR>
+<en-US>
+Major features and optimization update.
+
+· Added 8 clock presets & 6 Ambient color theme configurations
+· Swipe left/right gestures to switch presets instantly in standby mode
+· Local photo frame mode with 10-second crossfade slideshow
+· Ambient light sensor auto-night mode supporting Pure Black OLED theme
+· Responsive 5:5 split symmetric layouts optimized for tablets (>=600dp)
+· Dummy placeholders removed with polished reactive Empty UI states
+</en-US>
