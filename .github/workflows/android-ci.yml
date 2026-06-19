@@ -56,16 +56,20 @@ jobs:
             echo "Upload keystore decoded to $KS_PATH"
           else
             echo "present=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::DOCKMODE_KEYSTORE_BASE64 not set — release AAB will be unsigned."
+            if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+              echo "::error::DOCKMODE_KEYSTORE_BASE64 is required for GitHub Release APKs."
+              exit 1
+            fi
+            echo "::warning::DOCKMODE_KEYSTORE_BASE64 not set — release builds may be unsigned."
           fi
 
-      - name: Bundle release AAB
+      - name: Build release APK and Play Console AAB
         env:
           DOCKMODE_KEYSTORE_PATH: ${{ steps.keystore.outputs.path }}
           DOCKMODE_KEYSTORE_PASSWORD: ${{ secrets.DOCKMODE_KEYSTORE_PASSWORD }}
           DOCKMODE_KEY_PASSWORD: ${{ secrets.DOCKMODE_KEY_PASSWORD }}
           DOCKMODE_KEY_ALIAS: ${{ secrets.DOCKMODE_KEY_ALIAS }}
-        run: ./gradlew bundleRelease
+        run: ./gradlew assembleRelease bundleRelease
 
       - name: Collect release artifacts (rename with tag when present)
         id: collect
@@ -80,11 +84,11 @@ jobs:
           fi
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
 
-          APK_SRC=$(ls app/build/outputs/apk/debug/*.apk | head -1)
+          APK_SRC=$(ls app/build/outputs/apk/release/*.apk | head -1)
           AAB_SRC=$(ls app/build/outputs/bundle/release/*.aab | head -1)
           MAPPING_SRC="app/build/outputs/mapping/release/mapping.txt"
 
-          cp "$APK_SRC" "release-assets/dockmode-${TAG}-debug.apk"
+          cp "$APK_SRC" "release-assets/dockmode-${TAG}-release.apk"
           cp "$AAB_SRC" "release-assets/dockmode-${TAG}-release.aab"
           if [ -f "$MAPPING_SRC" ]; then
             cp "$MAPPING_SRC" "release-assets/dockmode-${TAG}-mapping.txt"
@@ -96,14 +100,14 @@ jobs:
 
           ls -lh release-assets/
 
-      - name: Upload APK
+      - name: Upload release APK
         uses: actions/upload-artifact@v4
         with:
-          name: dockmode-debug-apk
-          path: release-assets/dockmode-*-debug.apk
+          name: dockmode-release-apk
+          path: release-assets/dockmode-*-release.apk
           if-no-files-found: error
 
-      - name: Upload AAB
+      - name: Upload Play Console AAB artifact
         uses: actions/upload-artifact@v4
         with:
           name: dockmode-release-aab
@@ -143,6 +147,5 @@ jobs:
           generate_release_notes: ${{ steps.notes.outputs.generate == 'true' }}
           fail_on_unmatched_files: false
           files: |
-            release-assets/dockmode-*-debug.apk
-            release-assets/dockmode-*-release.aab
+            release-assets/dockmode-*-release.apk
             release-assets/dockmode-*-mapping.txt
